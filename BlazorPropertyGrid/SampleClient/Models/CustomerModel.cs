@@ -27,6 +27,8 @@ namespace BlazorSampleClient.Models
 
         public GenderInfo Gender { get; set; }
 
+        public bool IsVIP { get; set; }
+
     }
 
     public class GenderInfo

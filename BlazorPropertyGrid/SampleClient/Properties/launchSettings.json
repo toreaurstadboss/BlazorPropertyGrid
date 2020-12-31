@@ -2,6 +2,7 @@
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
+    "launchUrl": "sampleeditform",
     "iisExpress": {
       "applicationUrl": "http://localhost:2137",
       "sslPort": 44394
@@ -11,6 +12,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
+      "launchUrl": "sampleeditform",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -18,6 +20,7 @@
     "BlazorSampleClient": {
       "commandName": "Project",
       "launchBrowser": true,
+      "launchUrl": "sampleeditform", 
       "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

@@ -38,6 +38,11 @@
         <ValidationMessage For="@(() => exampleModel.Gender.Gender)" />
     </div>
 
+     <div class="form-group">
+        <label for="VIP">VIP?</label><br />
+        <InputCheckbox id="VIP" placeholder="Is VIP" @bind-Value="@exampleModel.IsVIP" />
+        <ValidationMessage For="@(() => exampleModel.IsVIP)" />
+    </div>
 
     <div class="form-group">
         <label for="city">City</label><br />

@@ -1,4 +1,5 @@
 ﻿@using  BlazorPropertyGridComponents.Components
+@using Microsoft.AspNetCore.Components.Web
 @inherits PropertyRowComponentBase
 
 @foreach (var item in PropertyInfoAtLevel.SubProperties.Keys)
@@ -25,7 +26,30 @@
         <span title="@propertyInfoAtLevel.FullPropertyPath" class="font-weight-bold">@propertyInfoAtLevel.PropertyName</span>
     </td>
     <td>
+        @if (new Type[]{typeof(DateTime) }.Contains(propertyInfoAtLevel.PropertyType)){
+            var castedPropertyValue = (DateTime)propertyInfoAtLevel.PropertyValue;
+           
+             <InputDate readonly="readonly" type="datetime" @bind-Value="@castedPropertyValue" />
+      
+        }
+         else if (new Type[]{typeof(bool) }.Contains(propertyInfoAtLevel.PropertyType)){
+            var castedPropertyValue = (bool)propertyInfoAtLevel.PropertyValue;
+            if (castedPropertyValue == true) {           
+             <input type="checkbox" readonly="readonly" checked="@castedPropertyValue" />      
+            }
+            else {
+             <input type="checkbox" readonly="readonly" />      
+            }
+
+        }
+        else if (new Type[]{typeof(string) }.Contains(propertyInfoAtLevel.PropertyType)){
+            var castedPropertyValue = (string)propertyInfoAtLevel.PropertyValue;
+           
+             <InputText readonly="readonly" type="datetime" @bind-Value="@castedPropertyValue" />      
+        }       
+        else {
         <span>@propertyInfoAtLevel.PropertyValue</span>
+        }
        
     </td>
 </tr>

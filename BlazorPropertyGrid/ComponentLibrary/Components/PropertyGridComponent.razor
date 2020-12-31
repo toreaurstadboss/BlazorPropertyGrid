@@ -1,6 +1,7 @@
 ﻿@inherits PropertyGridComponentBase
 @using BlazorPropertyGridComponents.Components
 
+  <EditForm Model="@DataContext">
 <table class="table table-striped col-md-4 col-lg-3 col-sm-6">
     <thead>
         <tr>
@@ -9,6 +10,7 @@
         </tr>
     </thead>
     <tbody>
+      
         @foreach (KeyValuePair<string, PropertyInfoAtLevelNodeComponent> prop in Props)
         {
             @if (!prop.Value.IsClass)
@@ -36,10 +38,11 @@
                         </tr>
             }
         }
+
     </tbody>
 </table>
 
-
+        </EditForm>
 
 
 @code {
