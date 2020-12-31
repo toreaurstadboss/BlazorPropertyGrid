@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
@@ -14,6 +15,8 @@ namespace BlazorPropertyGridComponents.Components
 
         [Parameter] public object DataContext { get; set; }
 
+        [Parameter] public string ObjectTitle { get; set; }
+
         public Dictionary<string, PropertyInfoAtLevelNodeComponent> Props { get; set; }
 
 
@@ -21,7 +24,6 @@ namespace BlazorPropertyGridComponents.Components
         {
             Props = new Dictionary<string, PropertyInfoAtLevelNodeComponent>();
         }
-
 
         protected override void OnParametersSet()
         {
