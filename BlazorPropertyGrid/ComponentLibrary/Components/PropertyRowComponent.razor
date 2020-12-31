@@ -42,6 +42,23 @@
             }
 
         }
+         else if (new Type[]{typeof(int), typeof(double), typeof(float), typeof(decimal) }.Contains(propertyInfoAtLevel.PropertyType)){
+            var castedPropertyValue = int.Parse(propertyInfoAtLevel.PropertyValue.ToString());
+           
+             <InputNumber typeof="number" readonly="readonly" @bind-Value="@castedPropertyValue" />      
+        } 
+        else if (new Type[]{typeof(double) }.Contains(propertyInfoAtLevel.PropertyType)){
+            var castedPropertyValue = propertyInfoAtLevel.PropertyValue.ToString();           
+             <InputText typeof="number" readonly="readonly" @bind-Value="@castedPropertyValue" />      
+        }   
+        else if (new Type[]{typeof(decimal) }.Contains(propertyInfoAtLevel.PropertyType)){
+            var castedPropertyValue = propertyInfoAtLevel.PropertyValue.ToString();           
+             <InputText typeof="number" readonly="readonly" @bind-Value="@castedPropertyValue" />      
+        }   
+        else if (new Type[]{typeof(float) }.Contains(propertyInfoAtLevel.PropertyType)){
+            var castedPropertyValue = propertyInfoAtLevel.PropertyValue.ToString();           
+             <InputText typeof="number" readonly="readonly" @bind-Value="@castedPropertyValue" />      
+        }   
         else if (new Type[]{typeof(string) }.Contains(propertyInfoAtLevel.PropertyType)){
             var castedPropertyValue = (string)propertyInfoAtLevel.PropertyValue;
            
