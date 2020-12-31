@@ -35,10 +35,10 @@
          else if (new Type[]{typeof(bool) }.Contains(propertyInfoAtLevel.PropertyType)){
             var castedPropertyValue = (bool)propertyInfoAtLevel.PropertyValue;
             if (castedPropertyValue == true) {           
-             <input type="checkbox" readonly="readonly" checked="@castedPropertyValue" />      
+             <input type="checkbox" readonly="readonly" checked="@castedPropertyValue" onclick="return false" />      
             }
             else {
-             <input type="checkbox" readonly="readonly" />      
+             <input type="checkbox" readonly="readonly" onclick="return false" />      
             }
 
         }
