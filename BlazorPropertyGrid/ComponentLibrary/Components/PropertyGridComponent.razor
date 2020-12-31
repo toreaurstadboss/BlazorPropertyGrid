@@ -1,0 +1,46 @@
+﻿@inherits PropertyGridComponentBase
+@using BlazorPropertyGridComponents.Components
+
+<table class="table table-striped col-md-4 col-lg-3 col-sm-6">
+    <thead>
+        <tr>
+            <th scope="col">Property</th>
+            <th scope="col">Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (KeyValuePair<string, PropertyInfoAtLevelNodeComponent> prop in Props)
+        {
+            @if (!prop.Value.IsClass)
+            {
+               @* <tr>
+                    <td>@prop.Key</td>
+                    <td>@prop.Value</td>
+                </tr>*@
+            }
+            else
+            {
+                
+                var currentNestedDiv = "currentDiv_" + prop.Key;
+                var currentProp = prop.Value.PropertyValue;
+                //must be a nested class property
+                <tr>
+                    <td colspan="2">
+              
+                        <button type="button" id="@prop.Key" class="btn btn-info fas fa-minus"  @onclick="(e) => toggleExpandButton(e,prop.Key)"  data-toggle="collapse" data-target="#@currentNestedDiv">
+                        </button>
+                        <div id="@currentNestedDiv" class="collapse show">
+                           <PropertyRowComponent Depth="1" PropertyInfoAtLevel="@prop.Value" />
+                        </div>
+                        </td>
+                        </tr>
+            }
+        }
+    </tbody>
+</table>
+
+
+
+
+@code {
+}

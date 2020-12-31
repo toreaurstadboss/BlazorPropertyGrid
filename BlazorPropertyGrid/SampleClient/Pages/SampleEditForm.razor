@@ -1,0 +1,110 @@
+﻿@page "/sampleeditform"
+<h3>Customer details</h3>
+
+<EditForm Model="@exampleModel" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+     <div class="form-group">
+        <label for="enrollement date">Enrollement date</label><br />
+        <InputDate id="enrollement date" placeholder="Time of enrollement" @bind-Value="exampleModel.EnrollementDate" />
+        <ValidationMessage For="@(() => exampleModel.EnrollementDate)" />
+    </div>
+
+    <div class="form-group">
+        <label for="name">Name</label><br />
+        <InputText id="name" placeholder="State your full name" @bind-Value="exampleModel.Name" />
+        <ValidationMessage For="@(() => exampleModel.Name)" />
+    </div>
+
+    <div class="form-group">
+        <label for="age">Age</label><br />
+        <InputNumber id="age" placeholder="Your age" @bind-Value="exampleModel.Age" />
+        <ValidationMessage For="@(() => exampleModel.Age)" />
+    </div>
+
+    
+    <div class="form-group">
+        <label for="gender">Gender</label><br />
+        <InputSelect id="gender" placeholder="Your gender" @bind-Value="exampleModel.Gender.Gender">
+            
+          
+            @foreach (var gender in Enum.GetValues(typeof(Gender)))
+            {
+            
+                <option value="@gender">@gender</option>
+            }
+        </InputSelect>
+        <ValidationMessage For="@(() => exampleModel.Gender.Gender)" />
+    </div>
+
+
+    <div class="form-group">
+        <label for="city">City</label><br />
+        <InputText id="city" placeholder="Your home city" @bind-Value="exampleModel.City" />
+        <ValidationMessage For="@(() => exampleModel.City)" />
+    </div>
+
+    <div class="form-group">
+        <label for="zipcode">Zipcode</label><br />
+        <InputNumber id="zipcode" placeholder="Address zipcode" @bind-Value="exampleModel.Address.Zipcode" />
+        <ValidationMessage For="@(() => exampleModel.Address.Zipcode)" />
+    </div>
+
+    <div class="form-group">
+        <label for="State">State</label><br />
+        <InputText id="State" placeholder="State (max three letters)" @bind-Value="exampleModel.Address.State" />
+        <ValidationMessage For="@(() => exampleModel.Address.State)" />
+    </div>
+
+     <div class="form-group">
+        <label for="pobox">Post box</label><br />
+        <InputText id="pobox" placeholder="P/O Box" @bind-Value="exampleModel.Address.AddressDetails.Box" />
+        <ValidationMessage For="@(() => exampleModel.Address.AddressDetails.Box)" />
+    </div>
+
+       <div class="form-group">
+        <label for="streetAddress">Street address</label><br />
+        <InputText id="streetAddress" placeholder="Street address" @bind-Value="exampleModel.Address.AddressDetails.StreetAddress" />
+        <ValidationMessage For="@(() => exampleModel.Address.AddressDetails.StreetAddress)" />
+    </div>
+
+
+    <button type="submit">Submit</button>
+
+
+
+</EditForm>
+
+<h2>Properties grid</h2>
+
+
+@*
+<BlazorSampleClient.Components.PropertyGrid DataContext="@exampleModel"></BlazorSampleClient.Components.PropertyGrid>
+*@
+
+
+<BlazorPropertyGridComponents.Components.PropertyGridComponent DataContext="@exampleModel"></BlazorPropertyGridComponents.Components.PropertyGridComponent>
+
+
+
+@code {
+    private CustomerModel exampleModel = new CustomerModel
+    {
+        Address = new AddressInfo
+        {
+            Zipcode = 7045,
+            AddressDetails = new AddressInfoDetails
+            {
+                Box = "PO Box 123"
+            }
+        }
+    };
+
+
+    private void HandleValidSubmit()
+    {
+
+    }
+
+}

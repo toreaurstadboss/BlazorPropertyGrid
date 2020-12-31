@@ -1,0 +1,59 @@
+﻿@using  BlazorPropertyGridComponents.Components
+@inherits PropertyRowComponentBase
+
+@foreach (var item in PropertyInfoAtLevel.SubProperties.Keys)
+{
+    var propertyInfoAtLevel = PropertyInfoAtLevel.SubProperties[item];
+    if (propertyInfoAtLevel != null)
+    {
+     @*   if (DisplayedFullPropertyPaths.Contains(propertyInfoAtLevel.FullPropertyPath)){
+          continue; //the property is already displayed.
+      }*@
+      DisplayedFullPropertyPaths.Add(propertyInfoAtLevel.FullPropertyPath); 
+      
+ @*        <span class="text-white bg-dark">@propertyInfoAtLevel.FullPropertyPath</span>*@
+
+@*  <em>
+@propertyInfoAtLevel
+</em>*@
+    }
+
+    if (!propertyInfoAtLevel.PropertyType.IsClass || propertyInfoAtLevel.PropertyType.Namespace.StartsWith("System"))
+    {
+<tr>
+    <td>
+        <span title="@propertyInfoAtLevel.FullPropertyPath" class="font-weight-bold">@propertyInfoAtLevel.PropertyName</span>
+    </td>
+    <td>
+        <span>@propertyInfoAtLevel.PropertyValue</span>
+       
+    </td>
+</tr>
+}
+    else if (propertyInfoAtLevel.PropertyValue != null && propertyInfoAtLevel.PropertyValue is PropertyInfoAtLevelNodeComponent)
+    {
+        var nestedLevel = (PropertyInfoAtLevelNodeComponent)propertyInfoAtLevel.PropertyValue;
+        var collapseOrNotCssClass = Depth == 0 ? "collapse show" : "collapse";
+        var curDepth = Depth + 1;
+
+        collapseOrNotCssClass += " depth" + Depth;
+
+
+ var currentNestedDiv = "collapsingdiv_" + propertyInfoAtLevel.PropertyName;
+
+ //must be a nested class property
+<tr>
+    <td colspan="2">
+        <span>@propertyInfoAtLevel.PropertyName</span>
+        <button id="@propertyInfoAtLevel.FullPropertyPath" type="button" @onclick="(e) => toggleExpandButton(e,propertyInfoAtLevel.FullPropertyPath)" class="fas btn btn-info fa-plus" data-toggle="collapse" data-target="#@currentNestedDiv"></button>
+        <div id="@currentNestedDiv" class="@collapseOrNotCssClass">
+            <PropertyRowComponent PropertyInfoAtLevel="@nestedLevel" Depth="@curDepth" />
+        </div>
+    </td>
+</tr>
+}
+}
+
+
+@code {
+}
