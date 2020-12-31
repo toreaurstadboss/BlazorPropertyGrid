@@ -55,4 +55,4 @@ I welcome also pull requests.
 Last update 31s of the December, 2020
 
 Tore Aurstad
-tore.aurstad@gmail.com 
+tore.aurstad@gmail.com  
