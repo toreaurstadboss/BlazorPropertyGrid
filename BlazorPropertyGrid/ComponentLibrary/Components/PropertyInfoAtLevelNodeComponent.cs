@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Components;
 
 namespace BlazorPropertyGridComponents.Components
 {
@@ -20,6 +21,12 @@ namespace BlazorPropertyGridComponents.Components
         public Dictionary<string, PropertyInfoAtLevelNodeComponent> SubProperties { get; private set; }
         public string FullPropertyPath { get; set; }
         public bool IsClass { get; set; }
+        public bool IsEditable { get; set; }
+
+        public object NewValue { get; set; }
+
+        public EventCallback<PropertyInfoAtLevelNodeComponent> ValueSetCallback { get; set; }
+
     }
 
 }

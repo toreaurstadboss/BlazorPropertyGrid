@@ -13,3 +13,8 @@
 	}
 
 }
+
+
+function updateEditableField(fieldname, fullpropertypath, newvalue) {
+	$("#" + fieldname).val(newvalue);
+}

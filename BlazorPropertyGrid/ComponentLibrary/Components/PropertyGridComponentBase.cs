@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 
@@ -17,7 +19,14 @@ namespace BlazorPropertyGridComponents.Components
 
         [Parameter] public string ObjectTitle { get; set; }
 
+
+        [Parameter]
+        public EventCallback<PropertyChangedInfoNotificationInfoPayload> PropertySetValueCallback { get; set; }
+
         public string CssStyleEditbutton { get; set; }
+
+
+        [Parameter] public bool IsEditingAllowed { get; set; }
 
         public Dictionary<string, PropertyInfoAtLevelNodeComponent> Props { get; set; }
 
@@ -35,9 +44,11 @@ namespace BlazorPropertyGridComponents.Components
                 return;
           
             Props["ROOT"] = MapPropertiesOfDataContext(string.Empty, DataContext, null);
+            SetEditFlag();
 
             StateHasChanged();
         }
+
 
         private bool IsNestedProperty(PropertyInfo pi) =>
             pi.PropertyType.IsClass && pi.PropertyType.Namespace != "System";
@@ -57,8 +68,9 @@ namespace BlazorPropertyGridComponents.Components
                 PropertyValue = parentObject,
                 PropertyType = parentObject.GetType(),
                 FullPropertyPath = TrimFullPropertyPath($"{propertyPath}.{currentProp?.Name}") ?? "ROOT",
-                IsClass = parentObject.GetType().IsClass && parentObject.GetType().Namespace != "System"
+                IsClass = parentObject.GetType().IsClass && parentObject.GetType().Namespace != "System",
             };
+            propertyNode.ValueSetCallback = new EventCallback<PropertyInfoAtLevelNodeComponent>(this, new Action<PropertyInfoAtLevelNodeComponent>(OnValueSetCallback));
 
             foreach (var p in publicProperties)
             {
@@ -66,30 +78,36 @@ namespace BlazorPropertyGridComponents.Components
 
                 if (!IsNestedProperty(p))
                 {
-                    propertyNode.SubProperties.Add(p.Name, new PropertyInfoAtLevelNodeComponent
-                        {
-                            IsClass = false,
-                            FullPropertyPath = TrimFullPropertyPath($"{propertyPath}.{p.Name}"),
-                            PropertyName = p.Name,
-                            PropertyValue = propertyValue,
-                            PropertyType = p.PropertyType
-                            //note - SubProperties are default empty if not nested property of course.
-                        }
-                    );
+                    var subprop = new PropertyInfoAtLevelNodeComponent
+                    {
+                        IsClass = false,
+                        FullPropertyPath = TrimFullPropertyPath($"{propertyPath}.{p.Name}"),
+                        PropertyName = p.Name,
+                        PropertyValue = propertyValue,
+                        PropertyType = p.PropertyType
+                        //note - SubProperties are default empty if not nested property of course.
+                    };
+                    subprop.ValueSetCallback = new EventCallback<PropertyInfoAtLevelNodeComponent>(this, new Action<PropertyInfoAtLevelNodeComponent>(OnValueSetCallback));
+
+                    propertyNode.SubProperties.Add(p.Name, subprop);
                 }
                 else
                 {
+                    var subprop = new PropertyInfoAtLevelNodeComponent
+                    {
+                        IsClass = true,
+                        FullPropertyPath = propertyPath + p.Name,
+                        PropertyName = p.Name,
+                        PropertyValue = MapPropertiesOfDataContext(TrimFullPropertyPath($"{propertyPath}.{p.Name}"),
+                            propertyValue, p),
+                        PropertyType = p.PropertyType
+                        //note - SubProperties are default empty if not nested property of course.
+                    };
+
+                    subprop.ValueSetCallback = new EventCallback<PropertyInfoAtLevelNodeComponent>(this, new Action<PropertyInfoAtLevelNodeComponent>(OnValueSetCallback));
+
                     //we need to add the sub property but recurse also call to fetch the nested properties 
-                    propertyNode.SubProperties.Add(p.Name, new PropertyInfoAtLevelNodeComponent
-                        {
-                            IsClass = true,
-                            FullPropertyPath = propertyPath + p.Name,
-                            PropertyName = p.Name,
-                            PropertyValue = MapPropertiesOfDataContext(TrimFullPropertyPath($"{propertyPath}.{p.Name}"), propertyValue, p),
-                            PropertyType = p.PropertyType
-                            //note - SubProperties are default empty if not nested property of course.
-                        }
-                    );
+                    propertyNode.SubProperties.Add(p.Name, subprop);
                 }
             }
 
@@ -98,10 +116,38 @@ namespace BlazorPropertyGridComponents.Components
 
         protected void toggleEditButton(MouseEventArgs e)
         {
-            if (CssStyleEditbutton.IndexOf("white") >= 0)
+            IsEditingAllowed = !IsEditingAllowed; //toggle edit flag 
+
+            SetEditFlag();
+
+            if (CssStyleEditbutton.IndexOf("white", StringComparison.Ordinal) >= 0)
                 CssStyleEditbutton = "color:yellow;background:orange";
             else
                 CssStyleEditbutton = "color:white";
+        }
+
+        private void SetEditFlag()
+        {
+            foreach (var prop in this.Props)
+            {
+                foreach (var subprop in prop.Value.SubProperties)
+                {
+                    subprop.Value.IsEditable = IsEditingAllowed;
+                }
+            }
+        }
+
+        protected void OnValueSetCallback(PropertyInfoAtLevelNodeComponent p)
+        {
+            if (!PropertySetValueCallback.HasDelegate)
+                return;
+            PropertySetValueCallback.InvokeAsync(new PropertyChangedInfoNotificationInfoPayload
+            {
+                FieldName = p.PropertyName,
+                FullPropertyPath = p.FullPropertyPath,
+                Value = p.NewValue
+            });
+
         }
 
         protected void toggleExpandButton(MouseEventArgs e, string buttonId)

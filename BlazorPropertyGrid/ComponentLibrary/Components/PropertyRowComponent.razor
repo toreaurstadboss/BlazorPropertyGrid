@@ -52,17 +52,29 @@
              <InputText typeof="number" readonly="readonly" @bind-Value="@castedPropertyValue" />      
         }   
         else if (new Type[]{typeof(decimal) }.Contains(propertyInfoAtLevel.PropertyType)){
-            var castedPropertyValue = propertyInfoAtLevel.PropertyValue.ToString();           
-             <InputText typeof="number" readonly="readonly" @bind-Value="@castedPropertyValue" />      
+            var castedPropertyValue = propertyInfoAtLevel.PropertyValue.ToString();      
+
+             <InputText typeof="number" readonly="readonly" @bind-Value="@castedPropertyValue" />   
         }   
         else if (new Type[]{typeof(float) }.Contains(propertyInfoAtLevel.PropertyType)){
-            var castedPropertyValue = propertyInfoAtLevel.PropertyValue.ToString();           
-             <InputText typeof="number" readonly="readonly" @bind-Value="@castedPropertyValue" />      
+            var castedPropertyValue = propertyInfoAtLevel.PropertyValue.ToString();      
+            
+            if(propertyInfoAtLevel.IsEditable) {
+              <InputText typeof="number" readonly="readonly" @bind-Value="@castedPropertyValue" />  
+             }
+            else {
+                <span>@castedPropertyValue</span>
+            }
         }   
         else if (new Type[]{typeof(string) }.Contains(propertyInfoAtLevel.PropertyType)){
             var castedPropertyValue = (string)propertyInfoAtLevel.PropertyValue;
            
-             <InputText readonly="readonly" type="datetime" @bind-Value="@castedPropertyValue" />      
+            if (propertyInfoAtLevel.IsEditable){
+             <InputText type="datetime" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" />    
+             }
+             else {
+                  <span style="background:beige;">@(castedPropertyValue ?? @ValueIsNotSet)</span>
+             }
         }       
         else {
         <span>@propertyInfoAtLevel.PropertyValue</span>
