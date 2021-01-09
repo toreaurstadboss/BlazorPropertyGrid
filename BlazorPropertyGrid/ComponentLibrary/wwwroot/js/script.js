@@ -5,5 +5,11 @@
     $("#" + elementId).removeClass("collapse");
 
     $("#" + elementId).toggleClass("fa-minus-circle");
+    
+    if ($("#" + elementId).hasClass("fa-plus")) {
+	    $("#" + elementId).attr("title", "Click here to expand the next level of the object structure");
+    } else {
+	    $("#" + elementId).attr("title", "Click here to collapse the level of the object structure");
+    }
 
 }

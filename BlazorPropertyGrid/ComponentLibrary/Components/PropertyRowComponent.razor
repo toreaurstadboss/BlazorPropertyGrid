@@ -86,7 +86,7 @@
 <tr>
     <td colspan="2">
         <span>@propertyInfoAtLevel.PropertyName</span>
-        <button id="@propertyInfoAtLevel.FullPropertyPath" type="button" @onclick="(e) => toggleExpandButton(e,propertyInfoAtLevel.FullPropertyPath)" class="fas btn btn-info fa-plus" data-toggle="collapse" data-target="#@currentNestedDiv"></button>
+        <button id="@propertyInfoAtLevel.FullPropertyPath" title="Click here to expand the next level of the object structure" type="button" @onclick="(e) => toggleExpandButton(e,propertyInfoAtLevel.FullPropertyPath)" class="fas btn btn-info fa-plus" data-toggle="collapse" data-target="#@currentNestedDiv"></button>
         <div id="@currentNestedDiv" class="@collapseOrNotCssClass">
             <PropertyRowComponent PropertyInfoAtLevel="@nestedLevel" Depth="@curDepth" />
         </div>

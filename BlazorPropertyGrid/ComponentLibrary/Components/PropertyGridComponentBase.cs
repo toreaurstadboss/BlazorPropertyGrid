@@ -17,12 +17,15 @@ namespace BlazorPropertyGridComponents.Components
 
         [Parameter] public string ObjectTitle { get; set; }
 
+        public string CssStyleEditbutton { get; set; }
+
         public Dictionary<string, PropertyInfoAtLevelNodeComponent> Props { get; set; }
 
 
         public PropertyGridComponentBase()
         {
             Props = new Dictionary<string, PropertyInfoAtLevelNodeComponent>();
+            CssStyleEditbutton = "color:white";
         }
 
         protected override void OnParametersSet()
@@ -91,6 +94,14 @@ namespace BlazorPropertyGridComponents.Components
             }
 
             return propertyNode;
+        }
+
+        protected void toggleEditButton(MouseEventArgs e)
+        {
+            if (CssStyleEditbutton.IndexOf("white") >= 0)
+                CssStyleEditbutton = "color:yellow;background:orange";
+            else
+                CssStyleEditbutton = "color:white";
         }
 
         protected void toggleExpandButton(MouseEventArgs e, string buttonId)

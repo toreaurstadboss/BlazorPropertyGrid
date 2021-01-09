@@ -12,6 +12,7 @@
         <tr>
             <th scope="col">Property</th>
             <th scope="col">Value</th>
+            <th scope="col"><button class="btn btn-info fas fa-pencil-alt" title="Click here to toggle edit mode" @onclick="(e) => toggleEditButton(e)" style="@CssStyleEditbutton"></button></th>
         </tr>
     </thead>
     <tbody>
@@ -40,6 +41,7 @@
                            <PropertyRowComponent Depth="1" PropertyInfoAtLevel="@prop.Value" />
                         </div>
                         </td>
+                        <td></td>
                         </tr>
             }
         }
