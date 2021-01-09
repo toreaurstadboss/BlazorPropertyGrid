@@ -34,36 +34,55 @@
         }
          else if (new Type[]{typeof(bool) }.Contains(propertyInfoAtLevel.PropertyType)){
             var castedPropertyValue = (bool)propertyInfoAtLevel.PropertyValue;
-            if (castedPropertyValue == true) {           
-             <input type="checkbox" readonly="readonly" checked="@castedPropertyValue" onclick="return false" />      
+            if (castedPropertyValue == true) { 
+             if (propertyInfoAtLevel.IsEditable) {
+               <InputCheckbox type="checkbox" checked="@castedPropertyValue" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" />     
+             }
+             else{
+                  <span style="background:beige;">@(castedPropertyValue.ToString() ?? @ValueIsNotSet)</span>                  
+             }
             }
             else {
-             <input type="checkbox" readonly="readonly" onclick="return false" />      
+             if (propertyInfoAtLevel.IsEditable){
+              <InputCheckbox type="checkbox" readonly="readonly" onclick="return false" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" />    
+             }
+             else{
+                  <span style="background:beige;">@(castedPropertyValue.ToString() ?? @ValueIsNotSet)</span>                  
+             }
             }
 
         }
          else if (new Type[]{typeof(int), typeof(double), typeof(float), typeof(decimal) }.Contains(propertyInfoAtLevel.PropertyType)){
             var castedPropertyValue = int.Parse(propertyInfoAtLevel.PropertyValue.ToString());
            
-             <InputNumber typeof="number" readonly="readonly" @bind-Value="@castedPropertyValue" />      
+             if (propertyInfoAtLevel.IsEditable) {
+              <InputNumber typeof="number" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" />   
+             }
+             else{
+                  <span style="background:beige;">@(castedPropertyValue.ToString() ?? @ValueIsNotSet)</span>                                                 
+             }
         } 
         else if (new Type[]{typeof(double) }.Contains(propertyInfoAtLevel.PropertyType)){
-            var castedPropertyValue = propertyInfoAtLevel.PropertyValue.ToString();           
-             <InputText typeof="number" readonly="readonly" @bind-Value="@castedPropertyValue" />      
+            var castedPropertyValue = propertyInfoAtLevel.PropertyValue.ToString();  
+            if (propertyInfoAtLevel.IsEditable) {
+              <InputText typeof="number" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" />      
+             }
         }   
         else if (new Type[]{typeof(decimal) }.Contains(propertyInfoAtLevel.PropertyType)){
             var castedPropertyValue = propertyInfoAtLevel.PropertyValue.ToString();      
 
-             <InputText typeof="number" readonly="readonly" @bind-Value="@castedPropertyValue" />   
+            if(propertyInfoAtLevel.IsEditable) {
+              <InputText typeof="number" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" />   
+             }
         }   
         else if (new Type[]{typeof(float) }.Contains(propertyInfoAtLevel.PropertyType)){
             var castedPropertyValue = propertyInfoAtLevel.PropertyValue.ToString();      
             
             if(propertyInfoAtLevel.IsEditable) {
-              <InputText typeof="number" readonly="readonly" @bind-Value="@castedPropertyValue" />  
+              <InputText typeof="number" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" />  
              }
             else {
-                <span>@castedPropertyValue</span>
+                  <span style="background:beige;">@(castedPropertyValue ?? @ValueIsNotSet)</span>
             }
         }   
         else if (new Type[]{typeof(string) }.Contains(propertyInfoAtLevel.PropertyType)){

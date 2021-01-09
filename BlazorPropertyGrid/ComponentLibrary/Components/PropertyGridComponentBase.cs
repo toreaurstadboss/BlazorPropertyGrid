@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
@@ -130,9 +131,30 @@ namespace BlazorPropertyGridComponents.Components
         {
             foreach (var prop in this.Props)
             {
-                foreach (var subprop in prop.Value.SubProperties)
+                SetEditFlagRecursive(prop.Value, IsEditingAllowed);
+            }
+        }
+
+        private void SetEditFlagRecursive(PropertyInfoAtLevelNodeComponent prop, bool isEditable)
+        {
+            prop.IsEditable = isEditable;
+            if (prop.SubProperties.Any())
+            {
+                foreach (var subprop in prop.SubProperties)
                 {
-                    subprop.Value.IsEditable = IsEditingAllowed;
+                    SetEditFlagRecursive(subprop.Value, isEditable);
+                }
+            }
+
+            if (prop.PropertyValue is PropertyInfoAtLevelNodeComponent)
+            {
+                var castedPropertyValue = (PropertyInfoAtLevelNodeComponent) prop.PropertyValue;
+                if (castedPropertyValue.SubProperties != null)
+                {
+                    foreach (var subprop in castedPropertyValue.SubProperties)
+                    {
+                        SetEditFlagRecursive(subprop.Value, isEditable);
+                    }
                 }
             }
         }
