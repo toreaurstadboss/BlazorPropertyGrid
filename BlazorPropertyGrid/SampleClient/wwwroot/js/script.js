@@ -16,5 +16,11 @@
 
 
 function updateEditableField(fieldname, fullpropertypath, newvalue) {
-	$("#" + fieldname).val(newvalue);
+	debugger
+	if (newvalue === true || newvalue == false) {
+		$("#" + fieldname).prop("checked", newvalue);
+	}
+	else {
+		$("#" + fieldname).val(newvalue);
+	}
 }

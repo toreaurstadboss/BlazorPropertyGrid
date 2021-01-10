@@ -29,7 +29,7 @@
         @if (new Type[]{typeof(DateTime) }.Contains(propertyInfoAtLevel.PropertyType)){
             var castedPropertyValue = (DateTime)propertyInfoAtLevel.PropertyValue;
            
-             <InputDate readonly="readonly" type="datetime" @bind-Value="@castedPropertyValue" />
+             <InputDate type="datetime" @bind-Value="@castedPropertyValue"  @oninput="(e) => setValue(e, propertyInfoAtLevel)" />
       
         }
          else if (new Type[]{typeof(bool) }.Contains(propertyInfoAtLevel.PropertyType)){
@@ -44,7 +44,7 @@
             }
             else {
              if (propertyInfoAtLevel.IsEditable){
-              <InputCheckbox type="checkbox" readonly="readonly" onclick="return false" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" />    
+              <InputCheckbox type="checkbox" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" />    
              }
              else{
                   <span style="background:beige;">@(castedPropertyValue.ToString() ?? @ValueIsNotSet)</span>                  
