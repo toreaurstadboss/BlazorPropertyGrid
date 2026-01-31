@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
+using System;
+using System.Collections.Generic;
 
 namespace BlazorPropertyGridComponents.Components
 {
@@ -47,7 +46,7 @@ namespace BlazorPropertyGridComponents.Components
                 return;
             try
             {
-                propertyInfoAtLevel.NewValue = e.Value; 
+                propertyInfoAtLevel.NewValue = e.Value;
 
                 await propertyInfoAtLevel.ValueSetCallback.InvokeAsync(propertyInfoAtLevel);
 

@@ -18,7 +18,7 @@ namespace BlazorSampleClient.Models
 
         public AddressInfo Address { get; set; }
 
-        [Range(0,125, ErrorMessage = "Age must be 0-125 years.")]
+        [Range(0, 125, ErrorMessage = "Age must be 0-125 years.")]
         public int Age { get; set; }
 
         public string City { get; set; }
@@ -55,7 +55,7 @@ namespace BlazorSampleClient.Models
         [Range(0, 9999, ErrorMessage = "Zip code must be between 0 and 9999.")]
         public int Zipcode { get; set; }
 
-        [StringLength(maximumLength:3, ErrorMessage = "Max length: 3 (Use abbreviation")]
+        [StringLength(maximumLength: 3, ErrorMessage = "Max length: 3 (Use abbreviation")]
         public string State { get; set; }
 
         public AddressInfoDetails AddressDetails { get; set; }

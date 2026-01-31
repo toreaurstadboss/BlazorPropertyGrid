@@ -1,12 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
+using Microsoft.JSInterop;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.JSInterop;
 
 namespace BlazorPropertyGridComponents.Components
 {
@@ -43,7 +41,7 @@ namespace BlazorPropertyGridComponents.Components
             Props.Clear();
             if (DataContext == null)
                 return;
-          
+
             Props["ROOT"] = MapPropertiesOfDataContext(string.Empty, DataContext, null);
             SetEditFlag();
 
@@ -75,7 +73,7 @@ namespace BlazorPropertyGridComponents.Components
 
             foreach (var p in publicProperties)
             {
-                var propertyValue = p.GetValue(parentObject, null); 
+                var propertyValue = p.GetValue(parentObject, null);
 
                 if (!IsNestedProperty(p))
                 {
@@ -148,7 +146,7 @@ namespace BlazorPropertyGridComponents.Components
 
             if (prop.PropertyValue is PropertyInfoAtLevelNodeComponent)
             {
-                var castedPropertyValue = (PropertyInfoAtLevelNodeComponent) prop.PropertyValue;
+                var castedPropertyValue = (PropertyInfoAtLevelNodeComponent)prop.PropertyValue;
                 if (castedPropertyValue.SubProperties != null)
                 {
                     foreach (var subprop in castedPropertyValue.SubProperties)
