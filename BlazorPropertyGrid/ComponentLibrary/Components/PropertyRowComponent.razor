@@ -29,7 +29,7 @@
         @if (new Type[]{typeof(DateTime) }.Contains(propertyInfoAtLevel.PropertyType)){
             var castedPropertyValue = (DateTime)propertyInfoAtLevel.PropertyValue;
            
-             <InputDate type="datetime" @bind-Value="@castedPropertyValue"  @oninput="(e) => setValue(e, propertyInfoAtLevel)" />
+             <InputDate type="InputDateType.DateTimeLocal" @bind-Value="@castedPropertyValue"  @oninput="(e) => setValue(e, propertyInfoAtLevel)" />
       
         }
          else if (new Type[]{typeof(bool) }.Contains(propertyInfoAtLevel.PropertyType)){
