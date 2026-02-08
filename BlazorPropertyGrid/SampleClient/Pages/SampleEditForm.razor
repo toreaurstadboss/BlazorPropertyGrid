@@ -29,25 +29,21 @@
                 <ValidationMessage For="@(() => exampleModel.Age)" />
             </div>
 
-
             <div class="form-group">
-                <label for="gender">Gender</label><br />
-                <InputSelect id="Gender.Gender" placeholder="Your gender" @bind-Value="exampleModel.Gender.Gender">
-
-
-                    @foreach (var gender in Enum.GetValues(typeof(Gender)))
+                <label for="gender">MemberShip Type</label><br />
+                <InputSelect id="CustomerInfoMemberShipType" placeholder="Your gender" @bind-Value="exampleModel.CustomerInfo.MemberShipType">
+                    @foreach (var gender in Enum.GetValues(typeof(MemberShipType)))
                     {
-
                         <option value="@gender">@gender</option>
                     }
                 </InputSelect>
-                <ValidationMessage For="@(() => exampleModel.Gender.Gender)" />
+                <ValidationMessage For="@(() => exampleModel.CustomerInfo.MemberShipType)" />
             </div>
 
             <div class="form-group">
                 <label for="VIP">VIP?</label><br />
-                <InputCheckbox id="IsVIP" placeholder="Is VIP" @bind-Value="@exampleModel.IsVIP" />
-                <ValidationMessage For="@(() => exampleModel.IsVIP)" />
+                <InputCheckbox id="IsVIP" placeholder="Is VIP" @bind-Value="@exampleModel.CustomerInfo.IsVIP" />
+                <ValidationMessage For="@(() => exampleModel.CustomerInfo.IsVIP)" />
             </div>
 
             <div class="form-group">

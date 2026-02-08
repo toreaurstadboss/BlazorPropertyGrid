@@ -9,7 +9,7 @@ namespace BlazorSampleClient.Models
         {
             EnrollementDate = DateTime.Today;
             Address = new AddressInfo();
-            Gender = new GenderInfo();
+            CustomerInfo = new CustomerInfo();
         }
 
         [Required]
@@ -25,23 +25,24 @@ namespace BlazorSampleClient.Models
 
         public DateTime EnrollementDate { get; set; }
 
-        public GenderInfo Gender { get; set; }
+        public CustomerInfo CustomerInfo { get; set; }
+
+    }
+
+    public class CustomerInfo
+    { 
 
         public bool IsVIP { get; set; }
 
+        public MemberShipType MemberShipType { get; set; }
     }
 
-    public class GenderInfo
+    public enum MemberShipType
     {
-        public Gender Gender { get; set; }
-
-    }
-
-    public enum Gender
-    {
-        Female,
-        Male,
-        Other
+        Standard = 0,
+        Bronze,
+        Silver,
+        Gold
     }
 
     public class AddressInfo

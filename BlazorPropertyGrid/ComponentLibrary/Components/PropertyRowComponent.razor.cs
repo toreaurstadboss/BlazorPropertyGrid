@@ -6,11 +6,11 @@ using System.Collections.Generic;
 
 namespace BlazorPropertyGridComponents.Components
 {
-    public class PropertyRowComponentBase : ComponentBase
+    public partial class PropertyRowComponent : ComponentBase
     {
 
 
-        public PropertyRowComponentBase()
+        public PropertyRowComponent()
         {
             DisplayedFullPropertyPaths = new List<string>();
             ValueIsNotSet = "[Value is blank]";
