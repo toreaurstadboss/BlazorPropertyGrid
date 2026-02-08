@@ -1,30 +1,24 @@
 ﻿// BlazorPropertyGrid JavaScript utilities
 // All functions use vanilla JavaScript (no jQuery dependency)
 
-/**
- * Toggles the expand/collapse button icon and tooltip for property grid items
- * @param {string} elementId - The ID of the button element to toggle
- */
 function toggleExpandButton(elementId) {
+    const button = document.getElementById(elementId);
+    if (!button) return;
 
-    //debugger
+    button.classList.toggle("fa-plus");
+    button.classList.toggle("fa-minus");
+    button.classList.toggle("fa-minus-circle");
+    button.classList.remove("collapse");
 
-    const element = document.getElementById(elementId);
-    if (!element) {
-        return;
-    }
+    const isExpanded = button.classList.contains("fa-minus");
+    button.title = isExpanded 
+        ? "Click here to collapse the level of the object structure"
+        : "Click here to expand the next level of the object structure";
 
-    // Toggle icon classes
-    element.classList.toggle("fa-plus");
-    element.classList.toggle("fa-minus");
-    element.classList.remove("collapse");
-    element.classList.toggle("fa-minus-circle");
-
-    // Update tooltip based on current state
-    if (element.classList.contains("fa-plus")) {
-        element.setAttribute("title", "Click here to expand the next level of the object structure");
-    } else {
-        element.setAttribute("title", "Click here to collapse the level of the object structure");
+    const target = button.getAttribute("data-target");
+    const targetDiv = target ? document.querySelector(target) : button.nextElementSibling;
+    if (targetDiv) {
+        targetDiv.classList.toggle("show");
     }
 }
 
