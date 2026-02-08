@@ -20,16 +20,20 @@
 
     if (!propertyInfoAtLevel.PropertyType.IsClass || propertyInfoAtLevel.PropertyType.Namespace.StartsWith("System"))
     {
-<tr>
-    <td>
-        <span title="@propertyInfoAtLevel.FullPropertyPath" class="font-weight-bold">@propertyInfoAtLevel.PropertyName</span>
+<tr class="property-row">
+    <td class="property-name-cell">
+        <span title="@propertyInfoAtLevel.FullPropertyPath" class="property-name">@propertyInfoAtLevel.PropertyName</span>
     </td>
-    <td>
+    <td class="property-value-cell">
         @if (new Type[]{typeof(DateTime) }.Contains(propertyInfoAtLevel.PropertyType)){
             var castedPropertyValue = (DateTime)propertyInfoAtLevel.PropertyValue;
-           
-             <InputDate type="InputDateType.DateTimeLocal" @bind-Value="@castedPropertyValue"  @oninput="(e) => setValue(e, propertyInfoAtLevel)" />
-      
+            if (propertyInfoAtLevel.IsEditable) {
+             
+                <InputDate Type="InputDateType.DateTimeLocal" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" class="form-control form-control-sm" />
+            }
+            else {
+                <span>@castedPropertyValue.ToString("g")</span>
+            }
         }
          else if (new Type[]{typeof(bool) }.Contains(propertyInfoAtLevel.PropertyType)){
             var castedPropertyValue = (bool)propertyInfoAtLevel.PropertyValue;
@@ -113,10 +117,17 @@
  var currentNestedDiv = "collapsingdiv_" + propertyInfoAtLevel.PropertyName;
 
  //must be a nested class property
-<tr>
-    <td colspan="2">
-        <span>@propertyInfoAtLevel.PropertyName</span>
-        <button id="@propertyInfoAtLevel.FullPropertyPath" title="Click here to expand the next level of the object structure" type="button" @onclick="(e) => toggleExpandButton(e,propertyInfoAtLevel.FullPropertyPath)" class="fas btn btn-info fa-plus" data-toggle="collapse" data-target="#@currentNestedDiv"></button>
+<tr class="property-row nested-property-row">
+    <td colspan="2" class="nested-property-cell">
+        <span class="nested-property-name">@propertyInfoAtLevel.PropertyName</span>
+        <button id="@propertyInfoAtLevel.FullPropertyPath" 
+                title="Click here to expand the next level of the object structure" 
+                type="button" 
+                @onclick="(e) => toggleExpandButton(e,propertyInfoAtLevel.FullPropertyPath)" 
+                class="fas btn btn-sm btn-secondary fa-plus" 
+                data-toggle="collapse" 
+                data-target="#@currentNestedDiv">
+        </button>
         <div id="@currentNestedDiv" class="@collapseOrNotCssClass">
             <PropertyRowComponent PropertyInfoAtLevel="@nestedLevel" Depth="@curDepth" />
         </div>

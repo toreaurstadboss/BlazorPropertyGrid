@@ -1,20 +1,26 @@
 ﻿@using BlazorPropertyGridComponents.Components
 
-<br />
+<div class="property-grid-container">
 <EditForm Model="@DataContext">
-<table class="table table-caption table-sm table-striped col-md-4 col-lg-3 col-sm-6">
+<table class="table table-sm property-grid-table">
 @{
             var objectname = nameof(@DataContext);
 }
-<caption>Properties : @(ObjectTitle ?? objectname )</caption>
-    <thead class="thead-dark">
+<caption class="property-grid-caption">@(ObjectTitle ?? objectname )</caption>
+    <thead class="property-grid-header">
         <tr>
             <th scope="col">Property</th>
             <th scope="col">Value</th>
-            <th scope="col"><button class="btn btn-info fas fa-pencil-alt" title="Click here to toggle edit mode" @onclick="(e) => toggleEditButton(e)" style="@CssStyleEditbutton"></button></th>
+            <th scope="col" class="text-center">
+                <button class="btn btn-sm btn-warning fas fa-pencil-alt" 
+                        title="Click here to toggle edit mode" 
+                        @onclick="(e) => toggleEditButton(e)" 
+                        style="@CssStyleEditbutton">
+                </button>
+            </th>
         </tr>
     </thead>
-    <tbody>
+    <tbody class="property-grid-body">
       
         @foreach (KeyValuePair<string, PropertyInfoAtLevelNodeComponent> prop in Props)
         {
@@ -47,9 +53,8 @@
 
     </tbody>
 </table>
-
-        </EditForm>
-        <br />
+</EditForm>
+</div>
 
 @code {
 }

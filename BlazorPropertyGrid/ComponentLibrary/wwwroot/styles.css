@@ -1,11 +1,133 @@
-﻿/*
-    This file is to show how CSS and other static resources (such as images) can be
-    used from a library project/package.
-*/
+﻿/* BlazorPropertyGrid Light Blue Theme Styles */
 
-.my-component {
-    border: 2px dashed red;
-    padding: 1em;
-    margin: 1em 0;
-    background-image: url('background.png');
+.property-grid-container {
+    background: #f0f8ff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(66, 133, 244, 0.2);
+    border: 1px solid #4285f4;
+}
+
+.property-grid-table {
+    background: #ffffff;
+    color: #333333;
+    border: 1px solid #4285f4;
+    margin-bottom: 0;
+}
+
+.property-grid-caption {
+    background: linear-gradient(135deg, #4285f4 0%, #5a9eff 100%);
+    color: #ffffff;
+    font-weight: 600;
+    padding: 0.75rem;
+    caption-side: top;
+    text-align: left;
+    border-radius: 6px 6px 0 0;
+}
+
+.property-grid-header {
+    background: #e8f0fe;
+    color: #1967d2;
+    border-bottom: 2px solid #4285f4;
+}
+
+.property-grid-header th {
+    border: 1px solid #c6dafc;
+    padding: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.property-grid-body {
+    background: #ffffff;
+}
+
+.property-row {
+    border-bottom: 1px solid #c6dafc;
+    transition: background-color 0.2s;
+}
+
+.property-row:hover {
+    background: #f8fbff;
+}
+
+.property-name-cell {
+    border-right: 1px solid #c6dafc;
+    padding: 0.75rem;
+    background: #f8fbff;
+    width: 40%;
+}
+
+.property-name {
+    color: #1967d2;
+    font-weight: 600;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.property-value-cell {
+    padding: 0.75rem;
+    color: #333333;
+}
+
+.property-value-cell input,
+.property-value-cell select {
+    background: #ffffff;
+    color: #333333;
+    border: 1px solid #c6dafc;
+    border-radius: 4px;
+    padding: 0.375rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+.property-value-cell input:focus,
+.property-value-cell select:focus {
+    border-color: #4285f4;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.1);
+}
+
+.property-value-cell span {
+    background: #e8f0fe;
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+    display: inline-block;
+    color: #1967d2;
+}
+
+.nested-property-row {
+    background: #f0f8ff;
+}
+
+.nested-property-cell {
+    padding: 0.5rem 0.75rem;
+}
+
+.nested-property-name {
+    color: #1967d2;
+    font-weight: 600;
+    margin-right: 0.5rem;
+}
+
+.depth0 {
+    margin-left: 0;
+}
+
+.depth1 {
+    margin-left: 1rem;
+    border-left: 2px solid #c6dafc;
+    padding-left: 0.5rem;
+}
+
+.depth2 {
+    margin-left: 2rem;
+    border-left: 2px solid #c6dafc;
+    padding-left: 0.5rem;
+}
+
+.depth3 {
+    margin-left: 3rem;
+    border-left: 2px solid #c6dafc;
+    padding-left: 0.5rem;
 }
