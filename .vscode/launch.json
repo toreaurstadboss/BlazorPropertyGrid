@@ -1,0 +1,31 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch Blazor Sample Client",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build-client",
+      "program": "${workspaceFolder}/BlazorPropertyGrid/SampleClient/bin/Debug/net10.0/BlazorSampleClient.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/BlazorPropertyGrid/SampleClient",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)",
+        "uriFormat": "%s/sampleeditform"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/BlazorPropertyGrid/SampleClient/Pages"
+      }
+    },
+    {
+      "name": "Attach to Blazor Sample Client",
+      "type": "coreclr",
+      "request": "attach"
+    }
+  ]
+}
