@@ -1,8 +1,10 @@
 # Blazor property grid
 
-This is a simple property grid component for objects with nested 
-structure for Blazor apps. It has been tested with asp.net core 3.1
-created via dotnet new blazorserver
+This is a simple property grid component for objects that supports 
+object with nested 
+properties in Blazor apps. 
+
+It has been tested with Blazor WASM in .NET 10. 
 
 it utilizes font awesome, twitter bootstrap, jquery and you can see 
 the versions used in libman.json

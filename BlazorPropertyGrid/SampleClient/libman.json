@@ -3,15 +3,11 @@
   "defaultProvider": "cdnjs",
   "libraries": [
     {
-      "library": "twitter-bootstrap@4.5.3",
-      "destination": "wwwroot/twitter-bootstrap/"
+      "library": "bootstrap@5.3.3",
+      "destination": "wwwroot/bootstrap/"
     },
     {
-      "library": "jquery@3.5.1",
-      "destination": "wwwroot/jquery/"
-    },
-    {
-      "library": "font-awesome@5.15.1",
+      "library": "font-awesome@6.5.1",
       "destination": "wwwroot/font-awesome/"
     }
   ]
