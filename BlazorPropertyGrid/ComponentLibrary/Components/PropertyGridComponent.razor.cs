@@ -8,29 +8,25 @@ using System.Reflection;
 
 namespace BlazorPropertyGridComponents.Components
 {
-    public class PropertyGridComponentBase : ComponentBase
+    public partial class PropertyGridComponent : ComponentBase
     {
 
-        [Inject]
-        public IJSRuntime JsRuntime { get; set; }
+        [Inject] public IJSRuntime JsRuntime { get; set; }
 
         [Parameter] public object DataContext { get; set; }
 
         [Parameter] public string ObjectTitle { get; set; }
 
-
-        [Parameter]
-        public EventCallback<PropertyChangedInfoNotificationInfoPayload> PropertySetValueCallback { get; set; }
+        [Parameter] public EventCallback<PropertyChangedInfoNotificationInfoPayload> PropertySetValueCallback { get; set; }
 
         public string CssStyleEditbutton { get; set; }
-
 
         [Parameter] public bool IsEditingAllowed { get; set; }
 
         public Dictionary<string, PropertyInfoAtLevelNodeComponent> Props { get; set; }
 
 
-        public PropertyGridComponentBase()
+        public PropertyGridComponent()
         {
             Props = new Dictionary<string, PropertyInfoAtLevelNodeComponent>();
             CssStyleEditbutton = "color:white";

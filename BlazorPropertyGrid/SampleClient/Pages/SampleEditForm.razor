@@ -86,7 +86,10 @@
     </div>
     <div class="col-md-6"> <!-- Proprety grid is shown in the right column-->
         <h4 class="mb-3">Property Grid</h4>
-        <BlazorPropertyGridComponents.Components.PropertyGridComponent PropertySetValueCallback="OnPropertyValueSet" ObjectTitle="exampleModel" DataContext="@exampleModel"></BlazorPropertyGridComponents.Components.PropertyGridComponent>
+        <PropertyGridComponent 
+            PropertySetValueCallback="OnPropertyValueSet" 
+            ObjectTitle="Sample edit form" 
+            DataContext="@exampleModel"></PropertyGridComponent>
     </div>
 </div>
 
