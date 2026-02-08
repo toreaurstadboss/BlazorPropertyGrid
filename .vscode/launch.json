@@ -2,7 +2,18 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch Blazor Sample Client",
+      "name": "Run Blazor Sample Client",
+      "type": "node",
+      "request": "launch",
+      "preLaunchTask": "run-client",
+      "serverReadyAction": {
+        "pattern": "Now listening on: (https?://\\S+)",
+        "uriFormat": "%s/sampleeditform",
+        "action": "openExternally"
+      }
+    },
+    {
+      "name": "Launch Blazor Sample Client (with debugger)",
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build-client",
@@ -21,11 +32,6 @@
       "sourceFileMap": {
         "/Views": "${workspaceFolder}/BlazorPropertyGrid/SampleClient/Pages"
       }
-    },
-    {
-      "name": "Attach to Blazor Sample Client",
-      "type": "coreclr",
-      "request": "attach"
     }
   ]
 }
