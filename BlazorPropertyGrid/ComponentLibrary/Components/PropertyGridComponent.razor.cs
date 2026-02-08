@@ -168,7 +168,7 @@ namespace BlazorPropertyGridComponents.Components
 
         protected void toggleExpandButton(MouseEventArgs e, string buttonId)
         {
-            JsRuntime.InvokeVoidAsync("toggleExpandButton", buttonId);
+            JsRuntime.InvokeVoidAsync("blazorPropertyGrid.toggleExpandButton", buttonId);
         }
 
         private string TrimFullPropertyPath(string fullpropertypath)

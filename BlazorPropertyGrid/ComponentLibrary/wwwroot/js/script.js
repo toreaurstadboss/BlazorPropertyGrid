@@ -6,8 +6,13 @@
  * @param {string} elementId - The ID of the button element to toggle
  */
 function toggleExpandButton(elementId) {
+
+    //debugger
+
     const element = document.getElementById(elementId);
-    if (!element) return;
+    if (!element) {
+        return;
+    }
 
     // Toggle icon classes
     element.classList.toggle("fa-plus");
@@ -48,3 +53,10 @@ function updateEditableField(fieldname, fullpropertypath, newvalue) {
         element.dispatchEvent(event);
     }
 }
+
+
+// Export property grid utilities to global scope
+window.blazorPropertyGrid = {
+    toggleExpandButton: toggleExpandButton,
+    updateEditableField: updateEditableField
+};

@@ -37,7 +37,7 @@ namespace BlazorPropertyGridComponents.Components
 
         protected void toggleExpandButton(MouseEventArgs e, string buttonId)
         {
-            JsRunTime.InvokeVoidAsync("toggleExpandButton", buttonId);
+            JsRunTime.InvokeVoidAsync("blazorPropertyGrid.toggleExpandButton", buttonId);
         }
 
         protected async void setValue(ChangeEventArgs e, PropertyInfoAtLevelNodeComponent propertyInfoAtLevel)
