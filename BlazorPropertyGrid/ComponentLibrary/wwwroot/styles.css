@@ -6,6 +6,8 @@
     padding: 0.5rem;
     box-shadow: 0 2px 8px rgba(66, 133, 244, 0.2);
     border: 1px solid #4285f4;
+    width: 100%;
+    max-width: 100%;
 }
 
 .property-grid-table {
@@ -14,6 +16,18 @@
     border: 1px solid #4285f4;
     margin-bottom: 0;
     font-size: 0.8rem;
+    table-layout: auto;
+    width: 100%;
+    min-width: 400px;
+}
+
+.property-grid-header-table {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.property-grid-body-table {
+    border-top: none;
 }
 
 .property-grid-caption {
@@ -59,7 +73,10 @@
     border-right: 1px solid #c6dafc;
     padding: 0.4rem 0.5rem;
     background: #f8fbff;
-    width: 40%;
+    width: 30%;
+    min-width: 120px;
+    vertical-align: middle;
+    white-space: nowrap;
 }
 
 .property-name {
@@ -72,6 +89,7 @@
 .property-value-cell {
     padding: 0.4rem 0.5rem;
     color: #333333;
+    width: 65%;
 }
 
 .property-value-cell input,
@@ -82,6 +100,8 @@
     border-radius: 3px;
     padding: 0.25rem 0.4rem;
     font-size: 0.75rem;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .property-value-cell input:focus,

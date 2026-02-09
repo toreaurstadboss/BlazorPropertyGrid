@@ -2,7 +2,9 @@
 
 <div class="property-grid-container">
 <EditForm Model="@DataContext">
-<table class="table table-sm property-grid-table">
+
+<!-- Header Table -->
+<table class="table table-sm property-grid-table property-grid-header-table">
 @{
             var objectname = nameof(@DataContext);
 }
@@ -20,6 +22,10 @@
             </th>
         </tr>
     </thead>
+</table>
+
+<!-- Body Table -->
+<table class="table table-sm property-grid-table property-grid-body-table">
     <tbody class="property-grid-body">
       
         @foreach (KeyValuePair<string, PropertyInfoAtLevelNodeComponent> prop in Props)
@@ -40,7 +46,7 @@
                 <tr>
                     <td colspan="2">
               
-                        <button type="button" id="@prop.Key" class="btn btn-info fas fa-minus"  @onclick="(e) => toggleExpandButton(e,prop.Key)"  data-toggle="collapse" data-target="#@currentNestedDiv">
+                        <button type="button" id="@prop.Key" class="btn btn-sm btn-secondary fas fa-minus"  @onclick="(e) => toggleExpandButton(e,prop.Key)"  data-toggle="collapse" data-target="#@currentNestedDiv">
                         </button>
                         <div id="@currentNestedDiv" class="collapse show">
                            <PropertyRowComponent Depth="1" PropertyInfoAtLevel="@prop.Value" />
@@ -53,6 +59,7 @@
 
     </tbody>
 </table>
+
 </EditForm>
 </div>
 

@@ -29,7 +29,7 @@
             var castedPropertyValue = (DateTime)propertyInfoAtLevel.PropertyValue;
             if (propertyInfoAtLevel.IsEditable) {
              
-                <InputDate Type="InputDateType.DateTimeLocal" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" class="form-control form-control-sm" />
+                <InputDate Type="InputDateType.DateTimeLocal" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" class="form-control form-control-sm w-100" placeholder="Select date and time" />
             }
             else {
                 <span>@castedPropertyValue.ToString("g")</span>
@@ -59,7 +59,7 @@
             var castedPropertyValue = int.Parse(propertyInfoAtLevel.PropertyValue.ToString());
            
              if (propertyInfoAtLevel.IsEditable) {
-              <InputNumber typeof="number" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" />   
+              <InputNumber typeof="number" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" class="form-control form-control-sm w-100" placeholder="Enter number" />   
              }
              else{
                   <span style="background:beige;">@(castedPropertyValue.ToString() ?? @ValueIsNotSet)</span>                                                 
@@ -68,21 +68,21 @@
         else if (new Type[]{typeof(double) }.Contains(propertyInfoAtLevel.PropertyType)){
             var castedPropertyValue = propertyInfoAtLevel.PropertyValue.ToString();  
             if (propertyInfoAtLevel.IsEditable) {
-              <InputText typeof="number" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" />      
+              <InputText typeof="number" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" class="form-control form-control-sm w-100" placeholder="Enter decimal number" />      
              }
         }   
         else if (new Type[]{typeof(decimal) }.Contains(propertyInfoAtLevel.PropertyType)){
             var castedPropertyValue = propertyInfoAtLevel.PropertyValue.ToString();      
 
             if(propertyInfoAtLevel.IsEditable) {
-              <InputText typeof="number" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" />   
+              <InputText typeof="number" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" class="form-control form-control-sm w-100" placeholder="Enter decimal" />   
              }
         }   
         else if (new Type[]{typeof(float) }.Contains(propertyInfoAtLevel.PropertyType)){
             var castedPropertyValue = propertyInfoAtLevel.PropertyValue.ToString();      
             
             if(propertyInfoAtLevel.IsEditable) {
-              <InputText typeof="number" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" />  
+              <InputText typeof="number" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" class="form-control form-control-sm w-100" placeholder="Enter float" />  
              }
             else {
                   <span style="background:beige;">@(castedPropertyValue ?? @ValueIsNotSet)</span>
@@ -92,7 +92,7 @@
             var castedPropertyValue = (string)propertyInfoAtLevel.PropertyValue;
            
             if (propertyInfoAtLevel.IsEditable){
-             <InputText type="datetime" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" />    
+             <InputText type="text" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" class="form-control form-control-sm w-100" placeholder="Enter text" />    
              }
              else {
                   <span style="background:beige;">@(castedPropertyValue ?? @ValueIsNotSet)</span>
