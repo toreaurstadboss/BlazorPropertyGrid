@@ -2,8 +2,8 @@
 
 .property-grid-container {
     background: #f0f8ff;
-    border-radius: 8px;
-    padding: 1rem;
+    border-radius: 6px;
+    padding: 0.5rem;
     box-shadow: 0 2px 8px rgba(66, 133, 244, 0.2);
     border: 1px solid #4285f4;
 }
@@ -13,16 +13,18 @@
     color: #333333;
     border: 1px solid #4285f4;
     margin-bottom: 0;
+    font-size: 0.8rem;
 }
 
 .property-grid-caption {
     background: linear-gradient(135deg, #4285f4 0%, #5a9eff 100%);
     color: #ffffff;
     font-weight: 600;
-    padding: 0.75rem;
+    padding: 0.4rem 0.5rem;
     caption-side: top;
     text-align: left;
-    border-radius: 6px 6px 0 0;
+    border-radius: 4px 4px 0 0;
+    font-size: 0.85rem;
 }
 
 .property-grid-header {
@@ -33,11 +35,11 @@
 
 .property-grid-header th {
     border: 1px solid #c6dafc;
-    padding: 0.75rem;
+    padding: 0.4rem 0.5rem;
     font-weight: 600;
     text-transform: uppercase;
-    font-size: 0.85rem;
-    letter-spacing: 0.5px;
+    font-size: 0.7rem;
+    letter-spacing: 0.3px;
 }
 
 .property-grid-body {
@@ -55,7 +57,7 @@
 
 .property-name-cell {
     border-right: 1px solid #c6dafc;
-    padding: 0.75rem;
+    padding: 0.4rem 0.5rem;
     background: #f8fbff;
     width: 40%;
 }
@@ -64,10 +66,11 @@
     color: #1967d2;
     font-weight: 600;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 0.8rem;
 }
 
 .property-value-cell {
-    padding: 0.75rem;
+    padding: 0.4rem 0.5rem;
     color: #333333;
 }
 
@@ -76,24 +79,25 @@
     background: #ffffff;
     color: #333333;
     border: 1px solid #c6dafc;
-    border-radius: 4px;
-    padding: 0.375rem 0.5rem;
-    font-size: 0.875rem;
+    border-radius: 3px;
+    padding: 0.25rem 0.4rem;
+    font-size: 0.75rem;
 }
 
 .property-value-cell input:focus,
 .property-value-cell select:focus {
     border-color: #4285f4;
     outline: none;
-    box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.1);
+    box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.1);
 }
 
 .property-value-cell span {
     background: #e8f0fe;
-    padding: 0.25rem 0.5rem;
+    padding: 0.2rem 0.4rem;
     border-radius: 3px;
     display: inline-block;
     color: #1967d2;
+    font-size: 0.75rem;
 }
 
 .nested-property-row {
@@ -101,13 +105,14 @@
 }
 
 .nested-property-cell {
-    padding: 0.5rem 0.75rem;
+    padding: 0.3rem 0.5rem;
 }
 
 .nested-property-name {
     color: #1967d2;
     font-weight: 600;
-    margin-right: 0.5rem;
+    margin-right: 0.4rem;
+    font-size: 0.8rem;
 }
 
 .depth0 {
@@ -115,19 +120,19 @@
 }
 
 .depth1 {
-    margin-left: 1rem;
+    margin-left: 0.75rem;
     border-left: 2px solid #c6dafc;
-    padding-left: 0.5rem;
+    padding-left: 0.4rem;
 }
 
 .depth2 {
-    margin-left: 2rem;
+    margin-left: 1.5rem;
     border-left: 2px solid #c6dafc;
-    padding-left: 0.5rem;
+    padding-left: 0.4rem;
 }
 
 .depth3 {
-    margin-left: 3rem;
+    margin-left: 2.25rem;
     border-left: 2px solid #c6dafc;
-    padding-left: 0.5rem;
+    padding-left: 0.4rem;
 }
