@@ -1,5 +1,6 @@
 ﻿@using  BlazorPropertyGridComponents.Components
 @using Microsoft.AspNetCore.Components.Web
+@using Microsoft.AspNetCore.Components.Forms
 
 @foreach (var item in PropertyInfoAtLevel.SubProperties.Keys)
 {
@@ -97,6 +98,20 @@
              else {
                   <span style="background:beige;">@(castedPropertyValue ?? @ValueIsNotSet)</span>
              }
+        }
+        else if (propertyInfoAtLevel.PropertyType.IsEnum) {
+            var castedPropertyValue = propertyInfoAtLevel.PropertyValue;
+            if (propertyInfoAtLevel.IsEditable) {
+                <InputSelect @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" class="form-control form-control-sm w-100">
+                    @foreach (var enumValue in Enum.GetValues(propertyInfoAtLevel.PropertyType))
+                    {
+                        <option value="@enumValue">@enumValue</option>
+                    }
+                </InputSelect>
+            }
+            else {
+                <span style="background:beige;">@(castedPropertyValue?.ToString() ?? @ValueIsNotSet)</span>
+            }
         }       
         else {
         <span>@propertyInfoAtLevel.PropertyValue</span>

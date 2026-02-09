@@ -5,7 +5,7 @@
     "launchUrl": "sampleeditform",
     "iisExpress": {
       "applicationUrl": "http://localhost:2137",
-      "sslPort": 44394
+      "sslPort": 44379
     }
   },
   "profiles": {
