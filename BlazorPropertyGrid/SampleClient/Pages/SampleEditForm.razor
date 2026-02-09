@@ -1,5 +1,7 @@
 ﻿@page "/sampleeditform"
+@using Microsoft.AspNetCore.Components.Forms
 @using BlazorPropertyGridComponents.Components
+@using BlazorSampleClient.Models
 @inject IJSRuntime JsRunTime
 
 <h3 class="mb-4">Customer Details</h3>
@@ -42,7 +44,7 @@
 
             <div class="form-group">
                 <label for="VIP">VIP?</label><br />
-                <InputCheckbox id="CustomInfo_IsVIP" placeholder="Is VIP" @bind-Value="@exampleModel.CustomerInfo.IsVIP" />
+                <InputCheckbox id="CustomerInfo_IsVIP" placeholder="Is VIP" @bind-Value="@exampleModel.CustomerInfo.IsVIP" />
                 <ValidationMessage For="@(() => exampleModel.CustomerInfo.IsVIP)" />
             </div>
 

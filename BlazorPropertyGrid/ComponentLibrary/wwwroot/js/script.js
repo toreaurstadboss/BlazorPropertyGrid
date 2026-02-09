@@ -25,12 +25,12 @@ function toggleExpandButton(elementId) {
 /**
  * Updates an editable form field with a new value from the property grid
  * @param {string} fieldname - The ID of the form field to update
- * @param {string} fullpropertypath - The full property path (currently unused)
+ * @param {string} fullpropertypath - The full property path 
  * @param {*} newvalue - The new value to set
  */
 function updateEditableField(fieldname, fullpropertypath, newvalue) {
 
-    //debugger 
+   // debugger 
 
     const element = document.getElementById(fullpropertypath.replace(/\./g, '_'));
     if (!element) {
