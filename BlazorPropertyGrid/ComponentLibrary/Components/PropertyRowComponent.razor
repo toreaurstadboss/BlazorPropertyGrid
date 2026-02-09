@@ -1,4 +1,4 @@
-﻿@using  BlazorPropertyGridComponents.Components
+﻿@using BlazorPropertyGridComponents.Components
 @using Microsoft.AspNetCore.Components.Web
 @using Microsoft.AspNetCore.Components.Forms
 
@@ -7,121 +7,153 @@
     var propertyInfoAtLevel = PropertyInfoAtLevel.SubProperties[item];
     if (propertyInfoAtLevel != null)
     {
-     @*   if (DisplayedFullPropertyPaths.Contains(propertyInfoAtLevel.FullPropertyPath)){
+        @*   if (DisplayedFullPropertyPaths.Contains(propertyInfoAtLevel.FullPropertyPath)){
           continue; //the property is already displayed.
       }*@
-      DisplayedFullPropertyPaths.Add(propertyInfoAtLevel.FullPropertyPath); 
-      
- @*        <span class="text-white bg-dark">@propertyInfoAtLevel.FullPropertyPath</span>*@
+        DisplayedFullPropertyPaths.Add(propertyInfoAtLevel.FullPropertyPath);
 
-@*  <em>
+        @*        <span class="text-white bg-dark">@propertyInfoAtLevel.FullPropertyPath</span>*@
+
+        @*  <em>
 @propertyInfoAtLevel
 </em>*@
     }
 
     if (!propertyInfoAtLevel.PropertyType.IsClass || propertyInfoAtLevel.PropertyType.Namespace.StartsWith("System"))
     {
-<tr class="property-row">
-    <td class="property-name-cell">
-        <span title="@propertyInfoAtLevel.FullPropertyPath" class="property-name">@propertyInfoAtLevel.PropertyName</span>
-    </td>
-    <td class="property-value-cell">
-        @if (new Type[]{typeof(DateTime) }.Contains(propertyInfoAtLevel.PropertyType)){
-            var castedPropertyValue = (DateTime)propertyInfoAtLevel.PropertyValue;
-            if (propertyInfoAtLevel.IsEditable) {
-             
-                <InputDate Type="InputDateType.DateTimeLocal" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" class="form-control form-control-sm w-100" placeholder="Select date and time" />
-            }
-            else {
-                <span>@castedPropertyValue.ToString("g")</span>
-            }
-        }
-         else if (new Type[]{typeof(bool) }.Contains(propertyInfoAtLevel.PropertyType)){
-            var castedPropertyValue = (bool)propertyInfoAtLevel.PropertyValue;
-            if (castedPropertyValue == true) { 
-             if (propertyInfoAtLevel.IsEditable) {
-               <InputCheckbox type="checkbox" checked="@castedPropertyValue" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" />     
-             }
-             else{
-                  <span style="background:beige;">@(castedPropertyValue.ToString() ?? @ValueIsNotSet)</span>                  
-             }
-            }
-            else {
-             if (propertyInfoAtLevel.IsEditable){
-              <InputCheckbox type="checkbox" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" />    
-             }
-             else{
-                  <span style="background:beige;">@(castedPropertyValue.ToString() ?? @ValueIsNotSet)</span>                  
-             }
-            }
-
-        }
-         else if (new Type[]{typeof(int), typeof(double), typeof(float), typeof(decimal) }.Contains(propertyInfoAtLevel.PropertyType)){
-            var castedPropertyValue = int.Parse(propertyInfoAtLevel.PropertyValue.ToString());
-           
-             if (propertyInfoAtLevel.IsEditable) {
-              <InputNumber typeof="number" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" class="form-control form-control-sm w-100" placeholder="Enter number" />   
-             }
-             else{
-                  <span style="background:beige;">@(castedPropertyValue.ToString() ?? @ValueIsNotSet)</span>                                                 
-             }
-        } 
-        else if (new Type[]{typeof(double) }.Contains(propertyInfoAtLevel.PropertyType)){
-            var castedPropertyValue = propertyInfoAtLevel.PropertyValue.ToString();  
-            if (propertyInfoAtLevel.IsEditable) {
-              <InputText typeof="number" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" class="form-control form-control-sm w-100" placeholder="Enter decimal number" />      
-             }
-        }   
-        else if (new Type[]{typeof(decimal) }.Contains(propertyInfoAtLevel.PropertyType)){
-            var castedPropertyValue = propertyInfoAtLevel.PropertyValue.ToString();      
-
-            if(propertyInfoAtLevel.IsEditable) {
-              <InputText typeof="number" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" class="form-control form-control-sm w-100" placeholder="Enter decimal" />   
-             }
-        }   
-        else if (new Type[]{typeof(float) }.Contains(propertyInfoAtLevel.PropertyType)){
-            var castedPropertyValue = propertyInfoAtLevel.PropertyValue.ToString();      
-            
-            if(propertyInfoAtLevel.IsEditable) {
-              <InputText typeof="number" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" class="form-control form-control-sm w-100" placeholder="Enter float" />  
-             }
-            else {
-                  <span style="background:beige;">@(castedPropertyValue ?? @ValueIsNotSet)</span>
-            }
-        }   
-        else if (new Type[]{typeof(string) }.Contains(propertyInfoAtLevel.PropertyType)){
-            var castedPropertyValue = (string)propertyInfoAtLevel.PropertyValue;
-           
-            if (propertyInfoAtLevel.IsEditable){
-             <InputText type="text" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" class="form-control form-control-sm w-100" placeholder="Enter text" />    
-             }
-             else {
-                  <span style="background:beige;">@(castedPropertyValue ?? @ValueIsNotSet)</span>
-             }
-        }
-        else if (propertyInfoAtLevel.PropertyType.IsEnum) {
-            var castedPropertyValue = propertyInfoAtLevel.PropertyValue;
-            if (propertyInfoAtLevel.IsEditable) {
-                <select @onchange="(e) => setValue(e, propertyInfoAtLevel)" class="form-control form-control-sm w-100">
-                    <option value="" selected>-- Select a value --</option>
-                    @foreach (var enumValue in Enum.GetValues(propertyInfoAtLevel.PropertyType))
+        var controlId = propertyInfoAtLevel.FullPropertyPath.Replace(".", "_");
+        <tr class="property-row">
+            <td class="property-name-cell">
+                <span title="@propertyInfoAtLevel.FullPropertyPath" class="property-name">@propertyInfoAtLevel.PropertyName</span>
+            </td>
+            <td class="property-value-cell">
+                @if (new Type[] { typeof(DateTime) }.Contains(propertyInfoAtLevel.PropertyType))
+                {
+                    var castedPropertyValue = (DateTime)propertyInfoAtLevel.PropertyValue;
+                    if (propertyInfoAtLevel.IsEditable)
                     {
-                        var enumName = Enum.GetName(propertyInfoAtLevel.PropertyType, enumValue);
-                        <option value="@enumName" selected="@(enumName == castedPropertyValue?.ToString())">@enumName</option>
+
+                        <InputDate Type="InputDateType.DateTimeLocal" id="@controlId" data-fullpropertypath="@propertyInfoAtLevel.FullPropertyPath" title="@propertyInfoAtLevel.FullPropertyPath" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" class="form-control form-control-sm w-100" placeholder="Select date and time" />
                     }
-                </select>
-            }
-            else {
-                <span style="background:beige;">@(castedPropertyValue?.ToString() ?? @ValueIsNotSet)</span>
-            }
-        }       
-        else {
-        <span>@propertyInfoAtLevel.PropertyValue</span>
-        }
-       
-    </td>
-</tr>
-}
+                    else
+                    {
+                        <span>@castedPropertyValue.ToString("g")</span>
+                    }
+                }
+                else if (new Type[] { typeof(bool) }.Contains(propertyInfoAtLevel.PropertyType))
+                {
+                    var castedPropertyValue = (bool)propertyInfoAtLevel.PropertyValue;
+                    if (castedPropertyValue == true)
+                    {
+                        if (propertyInfoAtLevel.IsEditable)
+                        {
+                            <InputCheckbox type="checkbox" id="@controlId" data-fullpropertypath="@propertyInfoAtLevel.FullPropertyPath" title="@propertyInfoAtLevel.FullPropertyPath" checked="@castedPropertyValue" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" />
+                        }
+                        else
+                        {
+                            <span style="background:beige;">@(castedPropertyValue.ToString() ?? @ValueIsNotSet)</span>
+                        }
+                    }
+                    else
+                    {
+                        if (propertyInfoAtLevel.IsEditable)
+                        {
+                            <InputCheckbox type="checkbox" id="@controlId" data-fullpropertypath="@propertyInfoAtLevel.FullPropertyPath" title="@propertyInfoAtLevel.FullPropertyPath" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" />
+                        }
+                        else
+                        {
+                            <span style="background:beige;">@(castedPropertyValue.ToString() ?? @ValueIsNotSet)</span>
+                        }
+                    }
+
+                }
+                else if (new Type[] { typeof(int), typeof(double), typeof(float), typeof(decimal) }.Contains(propertyInfoAtLevel.PropertyType))
+                {
+                    var castedPropertyValue = int.Parse(propertyInfoAtLevel.PropertyValue.ToString());
+
+                    if (propertyInfoAtLevel.IsEditable)
+                    {
+                        <InputNumber typeof="number" id="@controlId" data-fullpropertypath="@propertyInfoAtLevel.FullPropertyPath" title="@propertyInfoAtLevel.FullPropertyPath" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" class="form-control form-control-sm w-100" placeholder="Enter number" />
+                    }
+                    else
+                    {
+                        <span style="background:beige;">@(castedPropertyValue.ToString() ?? @ValueIsNotSet)</span>
+                    }
+                }
+                else if (new Type[] { typeof(double) }.Contains(propertyInfoAtLevel.PropertyType))
+                {
+                    var castedPropertyValue = propertyInfoAtLevel.PropertyValue.ToString();
+                    if (propertyInfoAtLevel.IsEditable)
+                    {
+                        <InputText typeof="number" id="@controlId" data-fullpropertypath="@propertyInfoAtLevel.FullPropertyPath" title="@propertyInfoAtLevel.FullPropertyPath" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" class="form-control form-control-sm w-100" placeholder="Enter decimal number" />
+                    }
+                }
+                else if (new Type[] { typeof(decimal) }.Contains(propertyInfoAtLevel.PropertyType))
+                {
+                    var castedPropertyValue = propertyInfoAtLevel.PropertyValue.ToString();
+
+                    if (propertyInfoAtLevel.IsEditable)
+                    {
+                        <InputText typeof="number" id="@controlId" data-fullpropertypath="@propertyInfoAtLevel.FullPropertyPath" title="@propertyInfoAtLevel.FullPropertyPath" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" class="form-control form-control-sm w-100" placeholder="Enter decimal" />
+                    }
+                }
+                else if (new Type[] { typeof(float) }.Contains(propertyInfoAtLevel.PropertyType))
+                {
+                    var castedPropertyValue = propertyInfoAtLevel.PropertyValue.ToString();
+
+                    if (propertyInfoAtLevel.IsEditable)
+                    {
+                        <InputText typeof="number" id="@controlId" data-fullpropertypath="@propertyInfoAtLevel.FullPropertyPath" title="@propertyInfoAtLevel.FullPropertyPath" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" class="form-control form-control-sm w-100" placeholder="Enter float" />
+                    }
+                    else
+                    {
+                        <span style="background:beige;">@(castedPropertyValue ?? @ValueIsNotSet)</span>
+                    }
+                }
+                else if (new Type[] { typeof(string) }.Contains(propertyInfoAtLevel.PropertyType))
+                {
+                    var castedPropertyValue = (string)propertyInfoAtLevel.PropertyValue;
+                    if (propertyInfoAtLevel.IsEditable)
+                    {
+                        <InputText type="text" id="@controlId" data-fullpropertypath="@propertyInfoAtLevel.FullPropertyPath" title="@propertyInfoAtLevel.FullPropertyPath" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" class="form-control form-control-sm w-100" placeholder="Enter text" />
+                    }
+                    else
+                    {
+                        <span style="background:beige;">@(castedPropertyValue ?? @ValueIsNotSet)</span>
+                    }
+                }
+                else if (propertyInfoAtLevel.PropertyType.IsEnum)
+                {
+                    var castedPropertyValue = propertyInfoAtLevel.PropertyValue;
+                    if (propertyInfoAtLevel.IsEditable)
+                    {
+                        <select id="@controlId"
+                                data-fullpropertypath="@propertyInfoAtLevel.FullPropertyPath"
+                                @onchange="(e) => setValue(e, propertyInfoAtLevel)"
+                                class="form-control form-control-sm w-100">
+                            <option value="" selected>-- Select a value --</option>
+                            @foreach (var enumValue in Enum.GetValues(propertyInfoAtLevel.PropertyType))
+                            {
+                                var enumName = Enum.GetName(propertyInfoAtLevel.PropertyType, enumValue);
+                                var enumIntValue = Convert.ToInt32(enumValue);
+                                var isSelected = castedPropertyValue != null && Convert.ToInt32(castedPropertyValue) == enumIntValue;
+                                <option value="@enumIntValue" selected="@isSelected">@enumName</option>
+                            }
+                        </select>
+                    }
+                    else
+                    {
+                        <span style="background:beige;">@(castedPropertyValue?.ToString() ?? @ValueIsNotSet)</span>
+                    }
+                }
+                else
+                {
+                    <span>@propertyInfoAtLevel.PropertyValue</span>
+                }
+
+            </td>
+        </tr>
+    }
     else if (propertyInfoAtLevel.PropertyValue != null && propertyInfoAtLevel.PropertyValue is PropertyInfoAtLevelNodeComponent)
     {
         var nestedLevel = (PropertyInfoAtLevelNodeComponent)propertyInfoAtLevel.PropertyValue;
@@ -131,26 +163,26 @@
         collapseOrNotCssClass += " depth" + Depth;
 
 
- var currentNestedDiv = "collapsingdiv_" + propertyInfoAtLevel.PropertyName;
+        var currentNestedDiv = "collapsingdiv_" + propertyInfoAtLevel.PropertyName;
 
- //must be a nested class property
-<tr class="property-row nested-property-row">
-    <td colspan="2" class="nested-property-cell">
-        <span class="nested-property-name">@propertyInfoAtLevel.PropertyName</span>
-        <button id="@propertyInfoAtLevel.FullPropertyPath" 
-                title="Click here to expand the next level of the object structure" 
-                type="button" 
-                @onclick="(e) => toggleExpandButton(e,propertyInfoAtLevel.FullPropertyPath)" 
-                class="fas btn btn-sm btn-secondary fa-plus" 
-                data-toggle="collapse" 
-                data-target="#@currentNestedDiv">
-        </button>
-        <div id="@currentNestedDiv" class="@collapseOrNotCssClass">
-            <PropertyRowComponent PropertyInfoAtLevel="@nestedLevel" Depth="@curDepth" />
-        </div>
-    </td>
-</tr>
-}
+        //must be a nested class property
+        <tr class="property-row nested-property-row">
+            <td colspan="2" class="nested-property-cell">
+                <span class="nested-property-name">@propertyInfoAtLevel.PropertyName</span>
+                <button id="@propertyInfoAtLevel.FullPropertyPath"
+                        title="Click here to expand the next level of the object structure"
+                        type="button"
+                        @onclick="(e) => toggleExpandButton(e, propertyInfoAtLevel.FullPropertyPath)"
+                        class="fas btn btn-sm btn-secondary fa-plus"
+                        data-toggle="collapse"
+                        data-target="#@currentNestedDiv">
+                </button>
+                <div id="@currentNestedDiv" class="@collapseOrNotCssClass">
+                    <PropertyRowComponent PropertyInfoAtLevel="@nestedLevel" Depth="@curDepth" />
+                </div>
+            </td>
+        </tr>
+    }
 }
 
 

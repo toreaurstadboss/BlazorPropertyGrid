@@ -32,7 +32,7 @@ function updateEditableField(fieldname, fullpropertypath, newvalue) {
 
     //debugger 
 
-    const element = document.getElementById(fullpropertypath.replace('.', '_'));
+    const element = document.getElementById(fullpropertypath.replace(/\./g, '_'));
     if (!element) {
         return;
     }
@@ -43,7 +43,8 @@ function updateEditableField(fieldname, fullpropertypath, newvalue) {
     }
     else if (element.tagName === 'SELECT') {
         // Handle select elements (dropdowns for enums)
-        element.value = newvalue;
+        // Use the enum's integer value
+        element.value = newvalue.toString();
     }
     else {
         // Handle text/number inputs
