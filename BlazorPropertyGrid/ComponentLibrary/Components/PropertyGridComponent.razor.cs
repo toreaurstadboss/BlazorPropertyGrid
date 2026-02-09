@@ -109,7 +109,7 @@ namespace BlazorPropertyGridComponents.Components
             return propertyNode;
         }
 
-        protected void toggleEditButton(MouseEventArgs e)
+        protected void ToggleEditButton(MouseEventArgs e)
         {
             IsEditingAllowed = !IsEditingAllowed; //toggle edit flag 
 

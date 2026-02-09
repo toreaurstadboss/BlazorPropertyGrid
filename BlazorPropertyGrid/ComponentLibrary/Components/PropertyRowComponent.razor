@@ -33,7 +33,7 @@
                     if (propertyInfoAtLevel.IsEditable)
                     {
 
-                        <InputDate Type="InputDateType.DateTimeLocal" id="@controlId" data-fullpropertypath="@propertyInfoAtLevel.FullPropertyPath" title="@propertyInfoAtLevel.FullPropertyPath" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" class="form-control form-control-sm w-100" placeholder="Select date and time" />
+                        <InputDate Type="InputDateType.DateTimeLocal" id="@controlId" data-fullpropertypath="@propertyInfoAtLevel.FullPropertyPath" title="@propertyInfoAtLevel.FullPropertyPath" @bind-Value="@castedPropertyValue" @oninput="(e) => SetValue(e, propertyInfoAtLevel)" class="form-control form-control-sm w-100" placeholder="Select date and time" />
                     }
                     else
                     {
@@ -47,7 +47,7 @@
                     {
                         if (propertyInfoAtLevel.IsEditable)
                         {
-                            <InputCheckbox type="checkbox" id="@controlId" data-fullpropertypath="@propertyInfoAtLevel.FullPropertyPath" title="@propertyInfoAtLevel.FullPropertyPath" checked="@castedPropertyValue" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" />
+                            <InputCheckbox type="checkbox" id="@controlId" data-fullpropertypath="@propertyInfoAtLevel.FullPropertyPath" title="@propertyInfoAtLevel.FullPropertyPath" checked="@castedPropertyValue" @bind-Value="@castedPropertyValue" @oninput="(e) => SetValue(e, propertyInfoAtLevel)" />
                         }
                         else
                         {
@@ -58,7 +58,7 @@
                     {
                         if (propertyInfoAtLevel.IsEditable)
                         {
-                            <InputCheckbox type="checkbox" id="@controlId" data-fullpropertypath="@propertyInfoAtLevel.FullPropertyPath" title="@propertyInfoAtLevel.FullPropertyPath" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" />
+                            <InputCheckbox type="checkbox" id="@controlId" data-fullpropertypath="@propertyInfoAtLevel.FullPropertyPath" title="@propertyInfoAtLevel.FullPropertyPath" @bind-Value="@castedPropertyValue" @oninput="(e) => SetValue(e, propertyInfoAtLevel)" />
                         }
                         else
                         {
@@ -73,7 +73,7 @@
 
                     if (propertyInfoAtLevel.IsEditable)
                     {
-                        <InputNumber typeof="number" id="@controlId" data-fullpropertypath="@propertyInfoAtLevel.FullPropertyPath" title="@propertyInfoAtLevel.FullPropertyPath" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" class="form-control form-control-sm w-100" placeholder="Enter number" />
+                        <InputNumber typeof="number" id="@controlId" data-fullpropertypath="@propertyInfoAtLevel.FullPropertyPath" title="@propertyInfoAtLevel.FullPropertyPath" @bind-Value="@castedPropertyValue" @oninput="(e) => SetValue(e, propertyInfoAtLevel)" class="form-control form-control-sm w-100" placeholder="Enter number" />
                     }
                     else
                     {
@@ -85,7 +85,7 @@
                     var castedPropertyValue = propertyInfoAtLevel.PropertyValue.ToString();
                     if (propertyInfoAtLevel.IsEditable)
                     {
-                        <InputText typeof="number" id="@controlId" data-fullpropertypath="@propertyInfoAtLevel.FullPropertyPath" title="@propertyInfoAtLevel.FullPropertyPath" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" class="form-control form-control-sm w-100" placeholder="Enter decimal number" />
+                        <InputText typeof="number" id="@controlId" data-fullpropertypath="@propertyInfoAtLevel.FullPropertyPath" title="@propertyInfoAtLevel.FullPropertyPath" @bind-Value="@castedPropertyValue" @oninput="(e) => SetValue(e, propertyInfoAtLevel)" class="form-control form-control-sm w-100" placeholder="Enter decimal number" />
                     }
                 }
                 else if (new Type[] { typeof(decimal) }.Contains(propertyInfoAtLevel.PropertyType))
@@ -94,7 +94,7 @@
 
                     if (propertyInfoAtLevel.IsEditable)
                     {
-                        <InputText typeof="number" id="@controlId" data-fullpropertypath="@propertyInfoAtLevel.FullPropertyPath" title="@propertyInfoAtLevel.FullPropertyPath" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" class="form-control form-control-sm w-100" placeholder="Enter decimal" />
+                        <InputText typeof="number" id="@controlId" data-fullpropertypath="@propertyInfoAtLevel.FullPropertyPath" title="@propertyInfoAtLevel.FullPropertyPath" @bind-Value="@castedPropertyValue" @oninput="(e) => SetValue(e, propertyInfoAtLevel)" class="form-control form-control-sm w-100" placeholder="Enter decimal" />
                     }
                 }
                 else if (new Type[] { typeof(float) }.Contains(propertyInfoAtLevel.PropertyType))
@@ -103,7 +103,7 @@
 
                     if (propertyInfoAtLevel.IsEditable)
                     {
-                        <InputText typeof="number" id="@controlId" data-fullpropertypath="@propertyInfoAtLevel.FullPropertyPath" title="@propertyInfoAtLevel.FullPropertyPath" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" class="form-control form-control-sm w-100" placeholder="Enter float" />
+                        <InputText typeof="number" id="@controlId" data-fullpropertypath="@propertyInfoAtLevel.FullPropertyPath" title="@propertyInfoAtLevel.FullPropertyPath" @bind-Value="@castedPropertyValue" @oninput="(e) => SetValue(e, propertyInfoAtLevel)" class="form-control form-control-sm w-100" placeholder="Enter float" />
                     }
                     else
                     {
@@ -115,7 +115,7 @@
                     var castedPropertyValue = (string)propertyInfoAtLevel.PropertyValue;
                     if (propertyInfoAtLevel.IsEditable)
                     {
-                        <InputText type="text" id="@controlId" data-fullpropertypath="@propertyInfoAtLevel.FullPropertyPath" title="@propertyInfoAtLevel.FullPropertyPath" @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" class="form-control form-control-sm w-100" placeholder="Enter text" />
+                        <InputText type="text" id="@controlId" data-fullpropertypath="@propertyInfoAtLevel.FullPropertyPath" title="@propertyInfoAtLevel.FullPropertyPath" @bind-Value="@castedPropertyValue" @oninput="(e) => SetValue(e, propertyInfoAtLevel)" class="form-control form-control-sm w-100" placeholder="Enter text" />
                     }
                     else
                     {
@@ -129,7 +129,7 @@
                     {
                         <select id="@controlId"
                                 data-fullpropertypath="@propertyInfoAtLevel.FullPropertyPath"
-                                @onchange="(e) => setValue(e, propertyInfoAtLevel)"
+                                @onchange="(e) => SetValue(e, propertyInfoAtLevel)"
                                 class="form-control form-control-sm w-100">
                             <option value="" selected>-- Select a value --</option>
                             @foreach (var enumValue in Enum.GetValues(propertyInfoAtLevel.PropertyType))
@@ -172,7 +172,7 @@
                 <button id="@propertyInfoAtLevel.FullPropertyPath"
                         title="Click here to expand the next level of the object structure"
                         type="button"
-                        @onclick="(e) => toggleExpandButton(e, propertyInfoAtLevel.FullPropertyPath)"
+                        @onclick="(e) => ToggleExpandButton(e, propertyInfoAtLevel.FullPropertyPath)"
                         class="fas btn btn-sm btn-secondary fa-plus"
                         data-toggle="collapse"
                         data-target="#@currentNestedDiv">

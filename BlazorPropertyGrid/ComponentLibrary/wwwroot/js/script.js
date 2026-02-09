@@ -30,7 +30,7 @@ function toggleExpandButton(elementId) {
  */
 function updateEditableField(fieldname, fullpropertypath, newvalue) {
 
-   // debugger 
+   debugger 
 
     const element = document.getElementById(fullpropertypath.replace(/\./g, '_'));
     if (!element) {
