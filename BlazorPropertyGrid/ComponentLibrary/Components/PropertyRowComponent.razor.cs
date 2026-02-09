@@ -46,7 +46,15 @@ namespace BlazorPropertyGridComponents.Components
                 return;
             try
             {
-                propertyInfoAtLevel.NewValue = e.Value;
+                var value = e.Value;
+                
+                // Handle enum type conversion
+                if (propertyInfoAtLevel.PropertyType.IsEnum && value != null)
+                {
+                    value = Enum.Parse(propertyInfoAtLevel.PropertyType, value.ToString());
+                }
+                
+                propertyInfoAtLevel.NewValue = value;
 
                 await propertyInfoAtLevel.ValueSetCallback.InvokeAsync(propertyInfoAtLevel);
 

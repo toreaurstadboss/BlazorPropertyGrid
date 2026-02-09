@@ -102,12 +102,14 @@
         else if (propertyInfoAtLevel.PropertyType.IsEnum) {
             var castedPropertyValue = propertyInfoAtLevel.PropertyValue;
             if (propertyInfoAtLevel.IsEditable) {
-                <InputSelect @bind-Value="@castedPropertyValue" @oninput="(e) => setValue(e, propertyInfoAtLevel)" class="form-control form-control-sm w-100">
+                <select @onchange="(e) => setValue(e, propertyInfoAtLevel)" class="form-control form-control-sm w-100">
+                    <option value="" selected>-- Select a value --</option>
                     @foreach (var enumValue in Enum.GetValues(propertyInfoAtLevel.PropertyType))
                     {
-                        <option value="@enumValue">@enumValue</option>
+                        var enumName = Enum.GetName(propertyInfoAtLevel.PropertyType, enumValue);
+                        <option value="@enumName" selected="@(enumName == castedPropertyValue?.ToString())">@enumName</option>
                     }
-                </InputSelect>
+                </select>
             }
             else {
                 <span style="background:beige;">@(castedPropertyValue?.ToString() ?? @ValueIsNotSet)</span>

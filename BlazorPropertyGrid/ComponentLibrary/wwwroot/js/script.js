@@ -29,7 +29,10 @@ function toggleExpandButton(elementId) {
  * @param {*} newvalue - The new value to set
  */
 function updateEditableField(fieldname, fullpropertypath, newvalue) {
-    const element = document.getElementById(fieldname);
+
+    //debugger 
+
+    const element = document.getElementById(fullpropertypath.replace('.', '_'));
     if (!element) {
         return;
     }
@@ -38,14 +41,21 @@ function updateEditableField(fieldname, fullpropertypath, newvalue) {
     if (newvalue === true || newvalue === false) {
         element.checked = newvalue;
     }
+    else if (element.tagName === 'SELECT') {
+        // Handle select elements (dropdowns for enums)
+        element.value = newvalue;
+    }
     else {
         // Handle text/number inputs
         element.value = newvalue;
-
-        // Trigger change event for Blazor binding
-        const event = new Event('change', { bubbles: true });
-        element.dispatchEvent(event);
     }
+    
+    // Trigger input and change events for Blazor binding
+    const inputEvent = new Event('input', { bubbles: true });
+    element.dispatchEvent(inputEvent);
+    
+    const changeEvent = new Event('change', { bubbles: true });
+    element.dispatchEvent(changeEvent);
 }
 
 
