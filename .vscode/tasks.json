@@ -2,6 +2,24 @@
   "version": "2.0.0",
   "tasks": [
     {
+      "label": "kill-port-5001",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-Command",
+        "$connections = Get-NetTCPConnection -LocalPort 5001 -ErrorAction SilentlyContinue; if ($connections) { $connections | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force -ErrorAction SilentlyContinue }; Write-Host 'Stopped processes using port 5001' } else { Write-Host 'Port 5001 is free' }"
+      ],
+      "presentation": {
+        "echo": true,
+        "reveal": "silent",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": false
+      },
+      "problemMatcher": []
+    },
+    {
       "label": "run-client",
       "command": "dotnet",
       "type": "process",
@@ -12,6 +30,7 @@
       ],
       "problemMatcher": "$msCompile",
       "isBackground": true,
+      "dependsOn": ["kill-port-5001"],
       "presentation": {
         "echo": true,
         "reveal": "always",
@@ -29,7 +48,8 @@
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],
-      "problemMatcher": "$msCompile"
+      "problemMatcher": "$msCompile",
+      "dependsOn": ["kill-port-5001"]
     },
     {
       "label": "publish-client",

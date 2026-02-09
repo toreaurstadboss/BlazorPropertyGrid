@@ -22,12 +22,47 @@
       "cwd": "${workspaceFolder}/BlazorPropertyGrid/SampleClient",
       "stopAtEntry": false,
       "serverReadyAction": {
-        "action": "openExternally",
+        "action": "debugWithChrome",
         "pattern": "\\bNow listening on:\\s+(https?://\\S+)",
-        "uriFormat": "%s/sampleeditform"
+        "uriFormat": "%s/sampleeditform",
+        "webRoot": "${workspaceFolder}/BlazorPropertyGrid/SampleClient/wwwroot"
       },
       "env": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_URLS": "https://localhost:5001;http://localhost:5000"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/BlazorPropertyGrid/SampleClient/Pages"
+      },
+      "launchBrowser": {
+        "enabled": true,
+        "args": "${auto-detect-url}",
+        "windows": {
+          "command": "chrome.exe",
+          "args": "--remote-debugging-port=9222 --user-data-dir=\"${workspaceFolder}/.vscode/chrome-debug\" ${auto-detect-url}"
+        }
+      }
+    },
+    {
+      "name": "Launch Blazor Sample Client (Chrome Canary)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build-client",
+      "program": "${workspaceFolder}/BlazorPropertyGrid/SampleClient/bin/Debug/net10.0/BlazorSampleClient.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/BlazorPropertyGrid/SampleClient",
+      "stopAtEntry": false,
+      "launchBrowser": {
+        "enabled": true,
+        "args": "https://localhost:5001/sampleeditform",
+        "windows": {
+          "command": "${env:LOCALAPPDATA}\\Google\\Chrome SxS\\Application\\chrome.exe",
+          "args": "--new-window --incognito https://localhost:5001/sampleeditform"
+        }
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_URLS": "https://localhost:5001;http://localhost:5000"
       },
       "sourceFileMap": {
         "/Views": "${workspaceFolder}/BlazorPropertyGrid/SampleClient/Pages"
