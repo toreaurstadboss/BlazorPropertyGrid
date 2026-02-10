@@ -29,7 +29,25 @@
             <td class="property-value-cell">
                 @if (new Type[] { typeof(DateTime) }.Contains(propertyInfoAtLevel.PropertyType))
                 {
-                    var castedPropertyValue = (DateTime)propertyInfoAtLevel.PropertyValue;
+                    DateTime castedPropertyValue;
+                    if (propertyInfoAtLevel.PropertyValue is string strValue)
+                    {
+                        // Parse the string from HTML5 datetime-local input
+                        // Format: "yyyy-MM-ddTHH:mm" or "yyyy-MM-ddTHH:mm:ss"
+                        if (!DateTime.TryParse(strValue, out castedPropertyValue))
+                        {
+                            castedPropertyValue = DateTime.MinValue; // or handle error appropriately
+                        }
+                    }
+                    else if (propertyInfoAtLevel.PropertyValue is DateTime dt)
+                    {
+                        castedPropertyValue = dt;
+                    }
+                    else
+                    {
+                        castedPropertyValue = DateTime.MinValue; // or handle null/unexpected types
+                    }
+                    
                     if (propertyInfoAtLevel.IsEditable)
                     {
 

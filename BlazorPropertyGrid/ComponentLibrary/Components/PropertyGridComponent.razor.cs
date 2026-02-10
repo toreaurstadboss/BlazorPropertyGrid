@@ -165,9 +165,20 @@ namespace BlazorPropertyGridComponents.Components
             {
                 valueType = "enum";
                 // Convert enum to its name string for the form's InputSelect compatibility
-                if (value != null)
+                if (value != null && !string.IsNullOrWhiteSpace(value.ToString()))
                 {
-                    value = Enum.GetName(p.PropertyType, value) ?? value.ToString();
+                    if (Enum.IsDefined(p.PropertyType, value))
+                    {
+                        value = Enum.GetName(p.PropertyType, value);
+                    }
+                    else
+                    {
+                        value = value.ToString();
+                    }
+                }
+                else
+                {
+                    value = null;
                 }
             }
             else if (p.PropertyType == typeof(bool))
