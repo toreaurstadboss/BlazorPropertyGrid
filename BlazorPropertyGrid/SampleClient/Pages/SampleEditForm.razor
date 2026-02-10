@@ -2,6 +2,7 @@
 @using Microsoft.AspNetCore.Components.Forms
 @using BlazorPropertyGridComponents.Components
 @using BlazorSampleClient.Models
+@using System.Reflection
 @inject IJSRuntime JsRunTime
 
 <h3 class="mb-4">Customer Details</h3>
@@ -96,9 +97,61 @@
 @code {
     private void OnPropertyValueSet(PropertyChangedInfoNotificationInfoPayload pi)
     {
-        if (pi != null)
+        if (pi == null)
+            return;
+
+        // Update the model property directly via reflection so Blazor re-renders correctly
+        SetPropertyByPath(exampleModel, pi.FullPropertyPath, pi.Value, pi.ValueType);
+        StateHasChanged();
+    }
+
+    private void SetPropertyByPath(object target, string propertyPath, object value, string valueType)
+    {
+        if (target == null || string.IsNullOrEmpty(propertyPath))
+            return;
+
+        var parts = propertyPath.Split('.');
+        var current = target;
+
+        // Navigate to the parent object
+        for (int i = 0; i < parts.Length - 1; i++)
         {
-            JsRunTime.InvokeVoidAsync("blazorPropertyGrid.updateEditableField", pi.FieldName, pi.FullPropertyPath, pi.Value, pi.ValueType ?? "text");
+            var prop = current.GetType().GetProperty(parts[i]);
+            if (prop == null) return;
+            current = prop.GetValue(current);
+            if (current == null) return;
+        }
+
+        // Set the final property
+        var finalProp = current.GetType().GetProperty(parts[^1]);
+        if (finalProp == null) return;
+
+        try
+        {
+            object convertedValue = value;
+
+            if (finalProp.PropertyType.IsEnum && value != null)
+            {
+                var valStr = value.ToString();
+                if (int.TryParse(valStr, out int intVal))
+                    convertedValue = Enum.ToObject(finalProp.PropertyType, intVal);
+                else
+                    convertedValue = Enum.Parse(finalProp.PropertyType, valStr, ignoreCase: true);
+            }
+            else if (finalProp.PropertyType == typeof(bool) && value != null)
+            {
+                convertedValue = Convert.ToBoolean(value);
+            }
+            else if (value != null && finalProp.PropertyType != typeof(string))
+            {
+                convertedValue = Convert.ChangeType(value, finalProp.PropertyType);
+            }
+
+            finalProp.SetValue(current, convertedValue);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Failed to set {propertyPath}: {ex.Message}");
         }
     }
 
