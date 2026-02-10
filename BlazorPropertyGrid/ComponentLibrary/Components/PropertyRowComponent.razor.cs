@@ -57,8 +57,17 @@ namespace BlazorPropertyGridComponents.Components
                 }
                 
                 propertyInfoAtLevel.NewValue = value;
+                // Update PropertyValue so UI reflects the change immediately
+                propertyInfoAtLevel.PropertyValue = value;
 
                 await propertyInfoAtLevel.ValueSetCallback.InvokeAsync(propertyInfoAtLevel);
+                
+                // Force UI to re-render with new value
+                StateHasChanged();
+                
+                // Explicitly update the DOM select element to ensure selected option is visible
+                var controlId = propertyInfoAtLevel.FullPropertyPath.Replace(".", "_");
+                await JsRunTime.InvokeVoidAsync("blazorPropertyGrid.updateSelectOption", controlId, value);
 
             }
             catch (Exception err)

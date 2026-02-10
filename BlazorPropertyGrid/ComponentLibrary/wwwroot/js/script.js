@@ -30,8 +30,6 @@ function toggleExpandButton(elementId) {
  */
 function updateEditableField(fieldname, fullpropertypath, newvalue) {
 
-   debugger 
-
     const element = document.getElementById(fullpropertypath.replace(/\./g, '_'));
     if (!element) {
         return;
@@ -43,8 +41,27 @@ function updateEditableField(fieldname, fullpropertypath, newvalue) {
     }
     else if (element.tagName === 'SELECT') {
         // Handle select elements (dropdowns for enums)
-        // Use the enum's integer value
-        element.value = newvalue.toString();
+        // First, clear all selected options
+        const options = element.options;
+        for (let i = 0; i < options.length; i++) {
+            options[i].selected = false;
+        }
+        
+        // Find and select the option with matching value
+        const valueStr = newvalue.toString();
+        for (let i = 0; i < options.length; i++) {
+            if (options[i].value === valueStr) {
+                options[i].selected = true;
+                break;
+            }
+        }
+        
+        // Also set element.value as fallback
+        element.value = valueStr;
+
+        // exit here for the select
+        return; 
+
     }
     else {
         // Handle text/number inputs
@@ -59,9 +76,40 @@ function updateEditableField(fieldname, fullpropertypath, newvalue) {
     element.dispatchEvent(changeEvent);
 }
 
+/**
+ * Updates a select element to show the correct selected option
+ * @param {string} elementId - The ID of the select element
+ * @param {*} newvalue - The value to select
+ */
+function updateSelectOption(elementId, newvalue) {
+    const element = document.getElementById(elementId);
+    if (!element || element.tagName !== 'SELECT') {
+        return;
+    }
+
+    // Clear all selected options
+    const options = element.options;
+    for (let i = 0; i < options.length; i++) {
+        options[i].selected = false;
+    }
+    
+    // Find and select the option with matching value
+    const valueStr = newvalue.toString();
+    for (let i = 0; i < options.length; i++) {
+        if (options[i].value === valueStr) {
+            options[i].selected = true;
+            break;
+        }
+    }
+    
+    // Also set element.value as fallback
+    element.value = valueStr;
+}
+
 
 // Export property grid utilities to global scope
 window.blazorPropertyGrid = {
     toggleExpandButton: toggleExpandButton,
-    updateEditableField: updateEditableField
+    updateEditableField: updateEditableField,
+    updateSelectOption: updateSelectOption
 };

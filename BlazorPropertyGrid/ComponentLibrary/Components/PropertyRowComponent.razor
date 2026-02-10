@@ -127,16 +127,18 @@
                     var castedPropertyValue = propertyInfoAtLevel.PropertyValue;
                     if (propertyInfoAtLevel.IsEditable)
                     {
+                        var hasNoValue = castedPropertyValue == null;
                         <select id="@controlId"
                                 data-fullpropertypath="@propertyInfoAtLevel.FullPropertyPath"
                                 @onchange="(e) => SetValue(e, propertyInfoAtLevel)"
                                 class="form-control form-control-sm w-100">
-                            <option value="" selected>-- Select a value --</option>
+                            <option value="" selected="@hasNoValue">-- Select a value --</option>
                             @foreach (var enumValue in Enum.GetValues(propertyInfoAtLevel.PropertyType))
                             {
                                 var enumName = Enum.GetName(propertyInfoAtLevel.PropertyType, enumValue);
                                 var enumIntValue = Convert.ToInt32(enumValue);
-                                var isSelected = castedPropertyValue != null && Convert.ToInt32(castedPropertyValue) == enumIntValue;
+                                bool isNumber = int.TryParse(castedPropertyValue?.ToString(), out int castedPropertyValueAsInt);
+                                var isSelected = isNumber && castedPropertyValueAsInt == enumIntValue;
                                 <option value="@enumIntValue" selected="@isSelected">@enumName</option>
                             }
                         </select>
