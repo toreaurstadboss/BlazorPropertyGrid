@@ -128,30 +128,31 @@
                     if (propertyInfoAtLevel.IsEditable)
                     {
                         var hasNoValue = castedPropertyValue == null;
+                        // Compute the current select value as the integer representation
+                        var currentSelectValue = "";
+                        if (castedPropertyValue != null)
+                        {
+                            var valStr = castedPropertyValue.ToString();
+                            if (int.TryParse(valStr, out int intVal))
+                            {
+                                currentSelectValue = intVal.ToString();
+                            }
+                            else if (Enum.TryParse(propertyInfoAtLevel.PropertyType, valStr, true, out var parsed))
+                            {
+                                currentSelectValue = Convert.ToInt32(parsed).ToString();
+                            }
+                        }
                         <select id="@controlId"
                                 data-fullpropertypath="@propertyInfoAtLevel.FullPropertyPath"
                                 @onchange="(e) => SetValue(e, propertyInfoAtLevel)"
+                                value="@currentSelectValue"
                                 class="form-control form-control-sm w-100">
-                            <option value="" selected="@hasNoValue">-- Select a value --</option>
+                            <option value="">-- Select a value --</option>
                             @foreach (var enumValue in Enum.GetValues(propertyInfoAtLevel.PropertyType))
                             {
                                 var enumName = Enum.GetName(propertyInfoAtLevel.PropertyType, enumValue);
                                 var enumIntValue = Convert.ToInt32(enumValue);
-                                bool isSelected = false;
-                                if (castedPropertyValue != null)
-                                {
-                                    var valStr = castedPropertyValue.ToString();
-                                    // Match by int value or by enum name
-                                    if (int.TryParse(valStr, out int castedPropertyValueAsInt))
-                                    {
-                                        isSelected = castedPropertyValueAsInt == enumIntValue;
-                                    }
-                                    else
-                                    {
-                                        isSelected = string.Equals(valStr, enumName, StringComparison.OrdinalIgnoreCase);
-                                    }
-                                }
-                                <option value="@enumIntValue" selected="@isSelected">@enumName</option>
+                                <option value="@enumIntValue">@enumName</option>
                             }
                         </select>
                     }
