@@ -157,11 +157,39 @@ namespace BlazorPropertyGridComponents.Components
         {
             if (!PropertySetValueCallback.HasDelegate)
                 return;
+
+            var value = p.NewValue;
+            var valueType = "text";
+
+            if (p.PropertyType.IsEnum)
+            {
+                valueType = "enum";
+                // Convert enum to its name string for the form's InputSelect compatibility
+                if (value != null)
+                {
+                    value = Enum.GetName(p.PropertyType, value) ?? value.ToString();
+                }
+            }
+            else if (p.PropertyType == typeof(bool))
+            {
+                valueType = "boolean";
+            }
+            else if (p.PropertyType == typeof(int) || p.PropertyType == typeof(double) ||
+                     p.PropertyType == typeof(float) || p.PropertyType == typeof(decimal))
+            {
+                valueType = "number";
+            }
+            else if (p.PropertyType == typeof(DateTime))
+            {
+                valueType = "date";
+            }
+
             PropertySetValueCallback.InvokeAsync(new PropertyChangedInfoNotificationInfoPayload
             {
                 FieldName = p.PropertyName,
                 FullPropertyPath = p.FullPropertyPath,
-                Value = p.NewValue
+                Value = value,
+                ValueType = valueType
             });
 
         }

@@ -28,7 +28,7 @@ function toggleExpandButton(elementId) {
  * @param {string} fullpropertypath - The full property path 
  * @param {*} newvalue - The new value to set
  */
-function updateEditableField(fieldname, fullpropertypath, newvalue) {
+function updateEditableField(fieldname, fullpropertypath, newvalue, valueType) {
 
     const element = document.getElementById(fullpropertypath.replace(/\./g, '_'));
     if (!element) {
@@ -36,44 +36,55 @@ function updateEditableField(fieldname, fullpropertypath, newvalue) {
     }
 
     // Handle boolean values (checkboxes)
-    if (newvalue === true || newvalue === false) {
-        element.checked = newvalue;
+    if (element.type === 'checkbox' || valueType === 'boolean') {
+        element.checked = newvalue === true || newvalue === 'true' || newvalue === 1;
     }
-    else if (element.tagName === 'SELECT') {
-        // Handle select elements (dropdowns for enums)
-        // First, clear all selected options
+    else if (element.tagName === 'SELECT' || valueType === 'enum') {
+        // Handle select elements (dropdowns and enums)
+        // Try to find matching option by value or text (enum name)
+        const valueStr = (newvalue !== null && newvalue !== undefined) ? newvalue.toString() : '';
         const options = element.options;
-        for (let i = 0; i < options.length; i++) {
-            options[i].selected = false;
-        }
-        
-        // Find and select the option with matching value
-        const valueStr = newvalue.toString();
+        let found = false;
+
+        // First try exact match on option value
         for (let i = 0; i < options.length; i++) {
             if (options[i].value === valueStr) {
-                options[i].selected = true;
+                element.selectedIndex = i;
+                found = true;
                 break;
             }
         }
-        
-        // Also set element.value as fallback
-        element.value = valueStr;
 
-        // exit here for the select
-        return; 
+        // If not found, try matching by option text (covers enum name vs int mismatch)
+        if (!found) {
+            for (let i = 0; i < options.length; i++) {
+                if (options[i].text === valueStr) {
+                    element.selectedIndex = i;
+                    found = true;
+                    break;
+                }
+            }
+        }
 
+        if (!found) {
+            element.value = valueStr;
+        }
     }
     else {
         // Handle text/number inputs
         element.value = newvalue;
     }
     
-    // Trigger input and change events for Blazor binding
-    const inputEvent = new Event('input', { bubbles: true });
-    element.dispatchEvent(inputEvent);
-    
-    const changeEvent = new Event('change', { bubbles: true });
-    element.dispatchEvent(changeEvent);
+    // Dispatch only the event Blazor listens to for this element type
+    if (element.tagName === 'SELECT' || element.type === 'checkbox') {
+        const changeEvent = new Event('change', { bubbles: true });
+        element.dispatchEvent(changeEvent);
+    } else {
+        const inputEvent = new Event('input', { bubbles: true });
+        element.dispatchEvent(inputEvent);
+        const changeEvent = new Event('change', { bubbles: true });
+        element.dispatchEvent(changeEvent);
+    }
 }
 
 /**

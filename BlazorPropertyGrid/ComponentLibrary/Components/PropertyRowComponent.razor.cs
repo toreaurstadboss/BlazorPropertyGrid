@@ -48,12 +48,18 @@ namespace BlazorPropertyGridComponents.Components
             {
                 var value = e.Value;
                 
-                // Handle enum type conversion
+                // Handle enum type conversion - support both integer and name string values
                 if (propertyInfoAtLevel.PropertyType.IsEnum && value != null && !string.IsNullOrEmpty(value.ToString()))
                 {
-                    // Convert the integer value to the enum type
-                    int intValue = int.Parse(value.ToString());
-                    value = Enum.ToObject(propertyInfoAtLevel.PropertyType, intValue);
+                    var valueStr = value.ToString();
+                    if (int.TryParse(valueStr, out int intValue))
+                    {
+                        value = Enum.ToObject(propertyInfoAtLevel.PropertyType, intValue);
+                    }
+                    else if (Enum.TryParse(propertyInfoAtLevel.PropertyType, valueStr, ignoreCase: true, out var parsedEnum))
+                    {
+                        value = parsedEnum;
+                    }
                 }
                 
                 propertyInfoAtLevel.NewValue = value;
@@ -61,13 +67,6 @@ namespace BlazorPropertyGridComponents.Components
                 propertyInfoAtLevel.PropertyValue = value;
 
                 await propertyInfoAtLevel.ValueSetCallback.InvokeAsync(propertyInfoAtLevel);
-                
-                // Force UI to re-render with new value
-                StateHasChanged();
-                
-                // Explicitly update the DOM select element to ensure selected option is visible
-                var controlId = propertyInfoAtLevel.FullPropertyPath.Replace(".", "_");
-                await JsRunTime.InvokeVoidAsync("blazorPropertyGrid.updateSelectOption", controlId, value);
 
             }
             catch (Exception err)

@@ -5,5 +5,6 @@
         public string FullPropertyPath { get; set; }
         public string FieldName { get; set; }
         public object Value { get; set; }
+        public string ValueType { get; set; }
     }
 }

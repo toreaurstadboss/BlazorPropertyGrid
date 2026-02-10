@@ -21,7 +21,7 @@
 
     if (!propertyInfoAtLevel.PropertyType.IsClass || propertyInfoAtLevel.PropertyType.Namespace.StartsWith("System"))
     {
-        var controlId = propertyInfoAtLevel.FullPropertyPath.Replace(".", "_");
+        var controlId = "pg_" + propertyInfoAtLevel.FullPropertyPath.Replace(".", "_");
         <tr class="property-row">
             <td class="property-name-cell">
                 <span title="@propertyInfoAtLevel.FullPropertyPath" class="property-name">@propertyInfoAtLevel.PropertyName</span>
@@ -137,8 +137,20 @@
                             {
                                 var enumName = Enum.GetName(propertyInfoAtLevel.PropertyType, enumValue);
                                 var enumIntValue = Convert.ToInt32(enumValue);
-                                bool isNumber = int.TryParse(castedPropertyValue?.ToString(), out int castedPropertyValueAsInt);
-                                var isSelected = isNumber && castedPropertyValueAsInt == enumIntValue;
+                                bool isSelected = false;
+                                if (castedPropertyValue != null)
+                                {
+                                    var valStr = castedPropertyValue.ToString();
+                                    // Match by int value or by enum name
+                                    if (int.TryParse(valStr, out int castedPropertyValueAsInt))
+                                    {
+                                        isSelected = castedPropertyValueAsInt == enumIntValue;
+                                    }
+                                    else
+                                    {
+                                        isSelected = string.Equals(valStr, enumName, StringComparison.OrdinalIgnoreCase);
+                                    }
+                                }
                                 <option value="@enumIntValue" selected="@isSelected">@enumName</option>
                             }
                         </select>

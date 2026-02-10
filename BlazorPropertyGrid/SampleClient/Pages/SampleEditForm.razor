@@ -36,7 +36,7 @@
                 <InputSelect id="CustomerInfo_MemberShipType" placeholder="Your membership type" @bind-Value="exampleModel.CustomerInfo.MemberShipType">
                     @foreach (var memberShipType in Enum.GetValues(typeof(MemberShipType)))
                     {
-                        <option value="@((int)memberShipType)">@memberShipType</option>
+                        <option value="@memberShipType">@memberShipType</option>
                     }
                 </InputSelect>
                 <ValidationMessage For="@(() => exampleModel.CustomerInfo.MemberShipType)" />
@@ -98,7 +98,7 @@
     {
         if (pi != null)
         {
-            JsRunTime.InvokeVoidAsync("blazorPropertyGrid.updateEditableField", pi.FieldName, pi.FullPropertyPath, pi.Value);
+            JsRunTime.InvokeVoidAsync("blazorPropertyGrid.updateEditableField", pi.FieldName, pi.FullPropertyPath, pi.Value, pi.ValueType ?? "text");
         }
     }
 
