@@ -1,23 +1,35 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
-  <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
-	<Version>1.2.0</Version>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+		<Version>1.2.4</Version>
 
-  <ItemGroup>
-    <Compile Remove="Pages\**" />
-    <Content Remove="Pages\**" />
-    <EmbeddedResource Remove="Pages\**" />
-    <None Remove="Pages\**" />
-  </ItemGroup>
+		<!-- NuGet Package Metadata -->
+		<PackageId>BlazorPropertyGridComponents</PackageId>
+		<Authors>Tore Aurstad</Authors>
+		<Description>A property grid component for Blazor apps that supports inspection and editing of object properties at root and nested levels. Supports DateTime, numeric types, strings, booleans, and enums.</Description>
+		<PackageProjectUrl>https://github.com/toreaurstadboss/BlazorPropertyGrid</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/toreaurstadboss/BlazorPropertyGrid</RepositoryUrl>
+		<PackageReadmeFile>Readme.md</PackageReadmeFile>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<PackageTags>blazor;property-grid;inspector;reflection;component</PackageTags>
+	</PropertyGroup>
 
+	<ItemGroup>
+		<Compile Remove="Pages\**" />
+		<Content Remove="Pages\**" />
+		<EmbeddedResource Remove="Pages\**" />
+		<None Remove="Pages\**" />
+	</ItemGroup>
 
+	<ItemGroup>
+		<None Include="Readme.md" Pack="true" PackagePath="\" />
+		<None Include="LICENSE" Pack="true" PackagePath="\" />
+	</ItemGroup>
 
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components" Version="10.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="10.0.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Components" Version="10.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="10.0.0" />
+	</ItemGroup>
 
 </Project>
