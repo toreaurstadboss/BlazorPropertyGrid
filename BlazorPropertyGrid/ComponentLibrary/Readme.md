@@ -12,7 +12,7 @@ The author has provided this Blazor component as a mere academic exercise and ho
 
 Screenshot of the component is shown below. The property grid is shown to the right and is editing an object that is also the object the Edit Form to the left is editing. Changes are picked up automatically via data binding in the running Blazor WASM app.
 
-![](Screengrabv12.png)
+![Picture of running sample client showing the Blazor Property Grid](https://github.com/toreaurstadboss/BlazorPropertyGrid/blob/main/BlazorPropertyGrid/ComponentLibrary/screengrabv12.png)
 
 Please note that this component expects that you use Bootstrap and Font Awesome. It will be fairly easy to avoid this coupling if needed to switch over to some other CSS framework. For now, these two libs are requried. See the `libman.json` file in the class library for the particular version in use. There are also some styles set up the file `styles.css` in class library.
 
