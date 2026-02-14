@@ -16,7 +16,7 @@
 
             <div class="form-group">
                 <label for="enrollement date">Enrollement date</label><br />                
-                <InputDate id="EnrollementDate" placeholder="Time of enrollement" @bind-Value="exampleModel.EnrollementDate" />
+                <InputDate Type="InputDateType.DateTimeLocal" id="EnrollementDate" placeholder="Time of enrollement" @bind-Value="exampleModel.EnrollementDate" />
                 <ValidationMessage For="@(() => exampleModel.EnrollementDate)" />
             </div>
 

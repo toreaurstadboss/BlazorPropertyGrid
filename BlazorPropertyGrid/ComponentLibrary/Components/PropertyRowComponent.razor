@@ -85,9 +85,9 @@
                     }
 
                 }
-                else if (new Type[] { typeof(int), typeof(double), typeof(float), typeof(decimal) }.Contains(propertyInfoAtLevel.PropertyType))
+                else if (new Type[] { typeof(int) }.Contains(propertyInfoAtLevel.PropertyType))
                 {
-                    var castedPropertyValue = int.Parse(propertyInfoAtLevel.PropertyValue.ToString());
+                    int.TryParse(propertyInfoAtLevel.PropertyValue.ToString(), out int castedPropertyValue);
 
                     if (propertyInfoAtLevel.IsEditable)
                     {
