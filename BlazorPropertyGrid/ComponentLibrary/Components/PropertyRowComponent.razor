@@ -187,9 +187,9 @@
             </td>
         </tr>
     }
-    else if (propertyInfoAtLevel.PropertyValue != null && propertyInfoAtLevel.PropertyValue is PropertyInfoAtLevelNodeComponent)
+    else if (propertyInfoAtLevel.PropertyValue != null && propertyInfoAtLevel.PropertyValue is HierarchicalPropertyInfo)
     {
-        var nestedLevel = (PropertyInfoAtLevelNodeComponent)propertyInfoAtLevel.PropertyValue;
+        var nestedLevel = (HierarchicalPropertyInfo)propertyInfoAtLevel.PropertyValue;
         var collapseOrNotCssClass = Depth == 0 ? "collapse show" : "collapse";
         var curDepth = Depth + 1;
 

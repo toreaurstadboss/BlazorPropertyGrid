@@ -28,7 +28,7 @@
 <table class="table table-sm property-grid-table property-grid-body-table">
     <tbody class="property-grid-body">
       
-        @foreach (KeyValuePair<string, PropertyInfoAtLevelNodeComponent> prop in Props)
+        @foreach (KeyValuePair<string, HierarchicalPropertyInfo> prop in Props)
         {
             @if (!prop.Value.IsClass)
             {

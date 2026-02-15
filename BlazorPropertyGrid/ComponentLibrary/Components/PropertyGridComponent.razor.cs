@@ -19,16 +19,16 @@ namespace BlazorPropertyGridComponents.Components
 
         [Parameter] public EventCallback<PropertyChangedInfoNotificationInfoPayload> PropertySetValueCallback { get; set; }
 
-        public string CssStyleEditbutton { get; set; }
-
         [Parameter] public bool IsEditingAllowed { get; set; }
 
-        public Dictionary<string, PropertyInfoAtLevelNodeComponent> Props { get; set; }
+        public string CssStyleEditbutton { get; set; }
+
+        public Dictionary<string, HierarchicalPropertyInfo> Props { get; set; }
 
 
         public PropertyGridComponent()
         {
-            Props = new Dictionary<string, PropertyInfoAtLevelNodeComponent>();
+            Props = new Dictionary<string, HierarchicalPropertyInfo>();
             CssStyleEditbutton = "color:white";
         }
 
@@ -48,7 +48,7 @@ namespace BlazorPropertyGridComponents.Components
         private bool IsNestedProperty(PropertyInfo pi) =>
             pi.PropertyType.IsClass && pi.PropertyType.Namespace != "System";
 
-        private PropertyInfoAtLevelNodeComponent MapPropertiesOfDataContext(string propertyPath, object parentObject,
+        private HierarchicalPropertyInfo MapPropertiesOfDataContext(string propertyPath, object parentObject,
             PropertyInfo currentProp)
         {
             if (parentObject == null)
@@ -57,7 +57,7 @@ namespace BlazorPropertyGridComponents.Components
             var publicProperties = parentObject.GetType()
                 .GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
-            var propertyNode = new PropertyInfoAtLevelNodeComponent
+            var propertyNode = new HierarchicalPropertyInfo
             {
                 PropertyName = currentProp?.Name ?? "ROOT",
                 PropertyValue = parentObject,
@@ -65,7 +65,7 @@ namespace BlazorPropertyGridComponents.Components
                 FullPropertyPath = TrimFullPropertyPath($"{propertyPath}.{currentProp?.Name}") ?? "ROOT",
                 IsClass = parentObject.GetType().IsClass && parentObject.GetType().Namespace != "System",
             };
-            propertyNode.ValueSetCallback = new EventCallback<PropertyInfoAtLevelNodeComponent>(this, new Action<PropertyInfoAtLevelNodeComponent>(OnValueSetCallback));
+            propertyNode.ValueSetCallback = new EventCallback<HierarchicalPropertyInfo>(this, new Action<HierarchicalPropertyInfo>(OnValueSetCallback));
 
             foreach (var p in publicProperties)
             {
@@ -73,7 +73,7 @@ namespace BlazorPropertyGridComponents.Components
 
                 if (!IsNestedProperty(p))
                 {
-                    var subprop = new PropertyInfoAtLevelNodeComponent
+                    var subprop = new HierarchicalPropertyInfo
                     {
                         IsClass = false,
                         FullPropertyPath = TrimFullPropertyPath($"{propertyPath}.{p.Name}"),
@@ -82,13 +82,13 @@ namespace BlazorPropertyGridComponents.Components
                         PropertyType = p.PropertyType
                         //note - SubProperties are default empty if not nested property of course.
                     };
-                    subprop.ValueSetCallback = new EventCallback<PropertyInfoAtLevelNodeComponent>(this, new Action<PropertyInfoAtLevelNodeComponent>(OnValueSetCallback));
+                    subprop.ValueSetCallback = new EventCallback<HierarchicalPropertyInfo>(this, new Action<HierarchicalPropertyInfo>(OnValueSetCallback));
 
                     propertyNode.SubProperties.Add(p.Name, subprop);
                 }
                 else
                 {
-                    var subprop = new PropertyInfoAtLevelNodeComponent
+                    var subprop = new HierarchicalPropertyInfo
                     {
                         IsClass = true,
                         FullPropertyPath = propertyPath + p.Name,
@@ -99,7 +99,7 @@ namespace BlazorPropertyGridComponents.Components
                         //note - SubProperties are default empty if not nested property of course.
                     };
 
-                    subprop.ValueSetCallback = new EventCallback<PropertyInfoAtLevelNodeComponent>(this, new Action<PropertyInfoAtLevelNodeComponent>(OnValueSetCallback));
+                    subprop.ValueSetCallback = new EventCallback<HierarchicalPropertyInfo>(this, new Action<HierarchicalPropertyInfo>(OnValueSetCallback));
 
                     //we need to add the sub property but recurse also call to fetch the nested properties 
                     propertyNode.SubProperties.Add(p.Name, subprop);
@@ -129,7 +129,7 @@ namespace BlazorPropertyGridComponents.Components
             }
         }
 
-        private void SetEditFlagRecursive(PropertyInfoAtLevelNodeComponent prop, bool isEditable)
+        private void SetEditFlagRecursive(HierarchicalPropertyInfo prop, bool isEditable)
         {
             prop.IsEditable = isEditable;
             if (prop.SubProperties.Any())
@@ -140,9 +140,9 @@ namespace BlazorPropertyGridComponents.Components
                 }
             }
 
-            if (prop.PropertyValue is PropertyInfoAtLevelNodeComponent)
+            if (prop.PropertyValue is HierarchicalPropertyInfo)
             {
-                var castedPropertyValue = (PropertyInfoAtLevelNodeComponent)prop.PropertyValue;
+                var castedPropertyValue = (HierarchicalPropertyInfo)prop.PropertyValue;
                 if (castedPropertyValue.SubProperties != null)
                 {
                     foreach (var subprop in castedPropertyValue.SubProperties)
@@ -153,7 +153,7 @@ namespace BlazorPropertyGridComponents.Components
             }
         }
 
-        protected void OnValueSetCallback(PropertyInfoAtLevelNodeComponent p)
+        protected void OnValueSetCallback(HierarchicalPropertyInfo p)
         {
             if (!PropertySetValueCallback.HasDelegate)
                 return;

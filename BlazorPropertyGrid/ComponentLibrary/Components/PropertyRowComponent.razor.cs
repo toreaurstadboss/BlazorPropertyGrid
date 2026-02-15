@@ -20,27 +20,22 @@ namespace BlazorPropertyGridComponents.Components
 
         public string ValueIsNotSet { get; set; }
 
-        [Parameter]
-        public EventCallback<object> OnValueSet { get; set; }
+        [Parameter] public EventCallback<object> OnValueSet { get; set; }
 
-        [Parameter]
-        public PropertyInfoAtLevelNodeComponent PropertyInfoAtLevel { get; set; }
+        [Parameter] public HierarchicalPropertyInfo PropertyInfoAtLevel { get; set; }
 
-        [Parameter]
-        public int Depth { get; set; }
+        [Parameter] public int Depth { get; set; }
 
-        [Parameter]
-        public List<string> DisplayedFullPropertyPaths { get; set; }
+        [Parameter] public List<string> DisplayedFullPropertyPaths { get; set; }
 
-        [Inject]
-        protected IJSRuntime JsRunTime { get; set; }
+        [Inject] protected IJSRuntime JsRunTime { get; set; }
 
         protected void ToggleExpandButton(MouseEventArgs e, string buttonId)
         {
             JsRunTime.InvokeVoidAsync("blazorPropertyGrid.toggleExpandButton", buttonId);
         }
 
-        protected async void SetValue(ChangeEventArgs e, PropertyInfoAtLevelNodeComponent propertyInfoAtLevel)
+        protected async void SetValue(ChangeEventArgs e, HierarchicalPropertyInfo propertyInfoAtLevel)
         {
             if (propertyInfoAtLevel == null)
                 return;
